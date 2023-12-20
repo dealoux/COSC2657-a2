@@ -1,4 +1,4 @@
-package ducle.greenapp.models.utils;
+package ducle.greenapp.database.models.utils;
 
 import android.util.Log;
 
@@ -10,11 +10,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
-import ducle.greenapp.models.Entity;
+import ducle.greenapp.database.models.MyEntity;
 
 public class ModelUtils {
+    public static String prefixId(String id, String prefix){
+        if(!id.startsWith(prefix)){
+            return prefix + "_" + String.format("%04d", id);
+        }
+        return id;
+    }
+
     /**
      * This function reads and loads the given file
      * */
@@ -65,13 +73,13 @@ public class ModelUtils {
         return result;
     }
 
-    /**
-     * This function converts a map of T key value pair to a list of T instances and returns it
-     * @param map map of T key value pair
-     * */
-    public static <T extends Entity> ArrayList<T> toList(Map<String, T> map){
-        ArrayList<T> result = new ArrayList<>(map.values());
-        Collections.sort(result);
-        return result;
-    }
+//    /**
+//     * This function converts a map of T key value pair to a list of T instances and returns it
+//     * @param map map of T key value pair
+//     * */
+//    public static <T extends MyEntity> List<T> toList(Map<String, T> map){
+//        List<T> result = new ArrayList<>(map.values());
+//        Collections.sort(result);
+//        return result;
+//    }
 }

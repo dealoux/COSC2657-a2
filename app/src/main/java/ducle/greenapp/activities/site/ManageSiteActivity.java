@@ -1,4 +1,4 @@
-package ducle.greenapp.activities.reservation;
+package ducle.greenapp.activities.site;
 
 import static ducle.greenapp.activities.utils.ActivityUtils.setDate;
 
@@ -19,7 +19,7 @@ import java.util.GregorianCalendar;
 
 import ducle.greenapp.R;
 
-public class ManageReservationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ManageSiteActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,7 @@ public class ManageReservationActivity extends AppCompatActivity implements Date
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Fragment reservationFragment = new ReservationBrowseFragment();
+        Fragment reservationFragment = new SiteBrowseFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentFl, reservationFragment);
         transaction.commit();

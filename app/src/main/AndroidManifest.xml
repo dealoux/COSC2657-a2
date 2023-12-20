@@ -36,10 +36,10 @@
             android:name=".activities.browse.BrowseActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.reservation.ManageReservationActivity"
+            android:name=".activities.site.ManageSiteActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.reservation.MakeReservationActivity"
+            android:name=".activities.site.MakeSiteActivity"
             android:exported="false" />
         <activity
             android:name=".activities.home.HomeActivity"

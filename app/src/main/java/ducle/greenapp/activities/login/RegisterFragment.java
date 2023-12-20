@@ -50,17 +50,17 @@ public class RegisterFragment extends Fragment {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = AppRepository.Instance().getUserManager().addCustomer(
-                        fName.getText().toString(),
-                        lName.getText().toString(),
-                        address.getText().toString(),
-                        phone.getText().toString(),
-                        dob.getText().toString(),
-                        username.getText().toString(),
-                        password.getText().toString()
-                );
-
-                Toast.makeText(getActivity(), "Registered User " + text, Toast.LENGTH_SHORT).show();
+//                String text = AppRepository.Instance().getUserManager().addCustomer(
+//                        fName.getText().toString(),
+//                        lName.getText().toString(),
+//                        address.getText().toString(),
+//                        phone.getText().toString(),
+//                        dob.getText().toString(),
+//                        username.getText().toString(),
+//                        password.getText().toString()
+//                );
+//
+//                Toast.makeText(getActivity(), "Registered User " + text, Toast.LENGTH_SHORT).show();
 
                 popStack();
             }

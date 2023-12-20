@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity implements DatePickerDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framelayout);
 
-        AppRepository.Instance();
+        AppRepository.Instance(this);
 
         Fragment loginFragment = new LoginFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements DatePickerDialog
     @Override
     protected void onResume() {
         super.onResume();
-        AppRepository.Instance().storeData();
-        Toast.makeText(LoginActivity.this,"Data saved", Toast.LENGTH_SHORT).show();
+//        AppRepository.Instance().storeData();
+//        Toast.makeText(LoginActivity.this,"Data saved", Toast.LENGTH_SHORT).show();
     }
 }

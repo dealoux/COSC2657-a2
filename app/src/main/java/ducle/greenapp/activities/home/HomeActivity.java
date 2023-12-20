@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.browse.BrowseActivity;
-import ducle.greenapp.activities.reservation.ManageReservationActivity;
+import ducle.greenapp.activities.map.MapsActivity;
+import ducle.greenapp.activities.site.ManageSiteActivity;
 
 public class HomeActivity extends AppCompatActivity {
     @Override
@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonHomeBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(HomeActivity.this, BrowseActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, MapsActivity.class);
                 intent1.putExtras(intent);
                 launcher.launch(intent1);
             }
@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonHomeReservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(HomeActivity.this, ManageReservationActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, ManageSiteActivity.class);
                 intent1.putExtras(intent);
                 launcher.launch(intent1);
             }

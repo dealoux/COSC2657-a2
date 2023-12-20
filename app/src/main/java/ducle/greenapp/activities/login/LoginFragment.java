@@ -22,7 +22,7 @@ import android.widget.Toast;
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.activities.home.HomeActivity;
 import ducle.greenapp.R;
-import ducle.greenapp.models.user.User;
+import ducle.greenapp.database.models.user.User;
 
 public class LoginFragment extends Fragment {
     @Override
@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = AppRepository.Instance().getUserManager().validateLogin(username.getText().toString(), password.getText().toString());
+                User user = AppRepository.Instance(getContext()).validateUser(username.getText().toString(), password.getText().toString());
 
                 if(user != null){
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
