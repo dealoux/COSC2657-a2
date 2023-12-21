@@ -11,13 +11,13 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
+import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.database.models.CleanUpSite;
 
-public class SiteBrowseFragment extends Fragment {
+public class SiteBrowseFragment extends MyFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class SiteBrowseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Browse Reservation");
+        getActivity().setTitle("Browse Sites");
 
         Intent intent = getActivity().getIntent();
 
@@ -42,7 +42,7 @@ public class SiteBrowseFragment extends Fragment {
             public void onItemClick(AdapterView adapterView, View view, int i, long id) {
                 CleanUpSite reservation = (CleanUpSite) adapterView.getItemAtPosition(i);
                 Bundle bundle = new Bundle();
-                bundle.putString("reservationId", reservation.getId());
+                bundle.putString("siteId", reservation.getId());
 
                 SiteEditFragment siteEditFragment = new SiteEditFragment();
                 siteEditFragment.setArguments(bundle);
@@ -53,9 +53,5 @@ public class SiteBrowseFragment extends Fragment {
                         .commit();
             }
         });
-    }
-
-    private void popStack(){
-        getParentFragmentManager().popBackStack();
     }
 }

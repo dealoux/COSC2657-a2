@@ -37,7 +37,7 @@ public class ManageSiteActivity extends AppCompatActivity implements DatePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
-        setDate((EditText) findViewById(R.id.dateReservation), cal);
+        setDate((EditText) findViewById(R.id.dateSite), cal);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -47,7 +47,7 @@ public class ManageSiteActivity extends AppCompatActivity implements DatePickerD
         datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                EditText date = view.findViewById(R.id.dateReservation);
+                EditText date = view.findViewById(R.id.dateSite);
                 date.setText(dayOfMonth+ "-" + month + "-" +year);
             }
         });

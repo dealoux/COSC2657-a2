@@ -23,9 +23,9 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         String userId = (String) intent.getExtras().get("userId");
-        String userFname = (String) intent.getExtras().get("userFname");
+        String username = (String) intent.getExtras().get("username");
 
-        setTitle("Welcome " + userFname);
+        setTitle("Welcome " + username);
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -35,8 +35,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
 
-        Button buttonHomeBrowse = (Button) findViewById(R.id.buttonHomeBrowse);
-        buttonHomeBrowse.setOnClickListener(new View.OnClickListener() {
+        Button buttonHomeOpenMap = (Button) findViewById(R.id.buttonHomeOpenMap);
+        buttonHomeOpenMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(HomeActivity.this, ManageSiteActivity.class);
@@ -45,8 +45,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonHomeReservations = (Button) findViewById(R.id.buttonHomeReservation);
-        buttonHomeReservations.setOnClickListener(new View.OnClickListener() {
+        Button buttonHomeManageSite = (Button) findViewById(R.id.buttonHomeManageSite);
+        buttonHomeManageSite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(HomeActivity.this, ManageSiteActivity.class);
@@ -54,6 +54,21 @@ public class HomeActivity extends AppCompatActivity {
                 launcher.launch(intent1);
             }
         });
+
+        Button buttonHomeManageUser = (Button) findViewById(R.id.buttonHomeManageUser);
+
+//        buttonHomeManageUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent1 = new Intent(HomeActivity.this, ManageUserActivity.class);
+//                intent1.putExtras(intent);
+//                launcher.launch(intent1);
+//            }
+//        });
+
+        if(!userId.startsWith("ADM")){
+            buttonHomeManageUser.setVisibility(View.GONE);
+        }
     }
 
     @Override

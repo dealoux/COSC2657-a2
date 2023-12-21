@@ -3,6 +3,8 @@ import android.widget.EditText;
 
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 

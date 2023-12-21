@@ -6,18 +6,8 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Flowable;
-
 @Dao
 public interface VolunteerSiteDao {
-//    @Transaction
-//    @Query("SELECT * FROM Volunteer")
-//    Flowable<List<VolunteerWithSites>> getVolunteerWithSites();
-//
-//    @Transaction
-//    @Query("SELECT * FROM CleanUpSite")
-//    Flowable<List<SiteWithVolunteers>> getSiteWithVolunteers();
-
     @Transaction
     @Query("SELECT * FROM Volunteer")
     List<VolunteerWithSites> getVolunteerWithSites();

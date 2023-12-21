@@ -5,24 +5,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
+import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
+import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.utils.ActivityUtils;
 import ducle.greenapp.database.models.CleanUpSite;
+import ducle.greenapp.database.models.user.Volunteer;
 
-public class SiteEditFragment extends Fragment {
+public class SiteEditFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_reservation, container, false);
+        return inflater.inflate(R.layout.fragment_edit_site, container, false);
     }
 
     @Override
@@ -32,36 +36,33 @@ public class SiteEditFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         Bundle bundle = getArguments();
 
-        TextView reservationId = (TextView) view.findViewById(R.id.reservationId);
-        TextView centreData = (TextView) view.findViewById(R.id.centreReservation);
-        TextView fieldData = (TextView) view.findViewById(R.id.fieldReservation);
-        TextView customerData = (TextView) view.findViewById(R.id.customerReservation);
-        EditText dateReservation = (EditText) view.findViewById(R.id.dateReservation);
-        AutoCompleteTextView timeslot = (AutoCompleteTextView) view.findViewById(R.id.timeReservation);
-        Button buttonConfirm = (Button) view.findViewById(R.id.buttonReservationConfirm);
-        Button buttonCancel = (Button) view.findViewById(R.id.buttonReservationCancel);
+        TextView siteId = (TextView) view.findViewById(R.id.siteId);
+        TextView ownerData = (TextView) view.findViewById(R.id.siteOwner);
+        EditText dateSite = (EditText) view.findViewById(R.id.dateSite);
+        AutoCompleteTextView timeslot = (AutoCompleteTextView) view.findViewById(R.id.timeSite);
+        Button buttonViewVolunteers = (Button) view.findViewById(R.id.buttonViewVolunteers);
+        Button buttonConfirm = (Button) view.findViewById(R.id.buttonSiteConfirm);
+        Button buttonCancel = (Button) view.findViewById(R.id.buttonSiteCancel);
 
         CleanUpSite site;
 
         if(bundle != null){
-            getActivity().setTitle("Edit Reservation");
-//            site = AppRepository.Instance().getReservationManager().getManager().get(bundle.getString("reservationId"));
+            getActivity().setTitle("Edit Site");
+            site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(bundle.getString("siteId"));
         }
         else{
-            getActivity().setTitle("Make Reservation");
-//            Field field = AppRepository.Instance().findField(intent.getStringExtra("fieldId"));
-//            Volunteer volunteer = AppRepository.Instance().getUserManager().getCustomerManager().get(intent.getStringExtra("userId"));
-//            reservation = AppRepository.Instance().getReservationManager().nextReservation(volunteer, field);
+            getActivity().setTitle("Make Site");
+            site = AppRepository.Instance(getContext()).nextSite(intent.getParcelableExtra("Latlng"), intent.getStringExtra("userId"));
         }
 
-//        reservationId.setText(reservation.getId());
-//        centreData.setText(reservation.getField().getCentre().toString());
-//        fieldData.setText(reservation.getField().toString());
-//        customerData.setText(reservation.getCustomer().toString());
+        Volunteer owner = AppRepository.Instance(getContext()).getVolunteerDao().get(site.getOwnerId());
 
-//        timeslot.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, Reservation.TIME_SLOTS));
+        siteId.setText(site.getId());
+        ownerData.setText(owner.toString());
 
-        dateReservation.setOnClickListener(new View.OnClickListener() {
+        timeslot.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, CleanUpSite.TIME_SLOTS));
+
+        dateSite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityUtils.datePickerDialog(getActivity().getSupportFragmentManager());
@@ -71,16 +72,16 @@ public class SiteEditFragment extends Fragment {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                reservation.setDate(dateReservation.getText().toString());
-//                reservation.setTimeslot(timeslot.getText().toString());
-//
-//                if(bundle == null){
-//                    String result = AppRepository.Instance().getReservationManager().addReservation(reservation);
-//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Toast.makeText(getActivity(), "Edited reservation " + reservation.getId() , Toast.LENGTH_SHORT).show();
-//                }
+                site.setDate(dateSite.getText().toString());
+                site.setTime(timeslot.getText().toString());
+
+                if(bundle == null){
+                    String result = AppRepository.Instance(getContext()).addSite(site);
+                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Edited site " + site.getId() , Toast.LENGTH_SHORT).show();
+                }
 
                 popStack();
             }
@@ -89,17 +90,8 @@ public class SiteEditFragment extends Fragment {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(bundle != null){
-//                    reservation.setStatus("Cancelled");
-//                    Toast.makeText(getActivity(), "Cancelled reservation " + reservation.getId() , Toast.LENGTH_SHORT).show();
-//                }
-
                 popStack();
             }
         });
-    }
-
-    private void popStack(){
-        getActivity().finish();
     }
 }

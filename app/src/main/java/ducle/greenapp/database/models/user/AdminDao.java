@@ -6,25 +6,21 @@ import androidx.room.Query;
 import java.util.List;
 
 import ducle.greenapp.database.models.MyEntityDao;
-import io.reactivex.rxjava3.core.Flowable;
 
 @Dao
 public interface AdminDao extends MyEntityDao<Admin> {
-//    @Query("SELECT * FROM Admin")
-//    Flowable<List<Admin>> getAdminList();
-//
-//    @Query("SELECT * FROM Admin WHERE id = :id")
-//    Flowable<Admin> getAdmin(String id);
-//
-//    @Query("SELECT * FROM Admin WHERE username = :username AND password = :password")
-//    Flowable<ArrayList<Admin>> getAdmin(String username, String password);
+    @Query("SELECT COUNT(user_id) FROM Admin")
+    int getCount();
 
     @Query("SELECT * FROM Admin")
-    List<Admin> getAdminList();
+    List<Admin> getList();
 
     @Query("SELECT * FROM Admin WHERE user_id = :id")
-    Admin getAdmin(String id);
+    Admin get(String id);
+
+    @Query("SELECT * FROM Admin WHERE username = :username")
+    Volunteer getByUsername(String username);
 
     @Query("SELECT * FROM Admin WHERE username = :username AND password = :password")
-    Admin getAdmin(String username, String password);
+    Admin get(String username, String password);
 }

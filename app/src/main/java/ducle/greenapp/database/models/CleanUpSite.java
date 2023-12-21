@@ -5,12 +5,21 @@ import static ducle.greenapp.database.models.utils.ModelUtils.prefixId;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Entity
 public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
+    public final static List<String> TIME_SLOTS = new ArrayList<>(
+            Arrays.asList("7:00", "9:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00")
+    );
+
     @PrimaryKey
     @ColumnInfo(name = "site_id")
     @NonNull
@@ -26,21 +35,30 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
     @ColumnInfo(name = "collected_amount")
     private String collectedAmount;
 
+    @Ignore
+    public CleanUpSite(String id, LatLng latLng, String ownerId) {
+        super(latLng);
+        initData(id, ownerId, "", "", "", "");
+    }
+
     public CleanUpSite(String id, LatLng latLng, String ownerId, String name, String date, String time, String collectedAmount) {
         super(latLng);
         initData(id, ownerId, name, date, time, collectedAmount);
     }
 
+    @Ignore
     public CleanUpSite(String id, double latitude, double longitude, String ownerId, String name, String date, String time) {
         super(latitude, longitude);
         initData(id, ownerId, name, date, time, "");
     }
 
+    @Ignore
     public CleanUpSite(String id, String latitude, String longitude, String ownerId, String name, String date, String time) {
         super(latitude, longitude);
         initData(id, ownerId, name, date, time, "");
     }
 
+    @Ignore
     public CleanUpSite(String id, String location, String ownerId, String name, String date, String time) {
         super(location);
         initData(id, ownerId, name, date, time, "");

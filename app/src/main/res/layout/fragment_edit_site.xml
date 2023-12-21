@@ -6,56 +6,48 @@
     android:orientation="vertical"
     tools:context=".activities.site.SiteEditFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reservationIdLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Reservation ID">
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/reservationId"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/siteIdLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_weight="3"
+            android:hint="Site ID">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/centreLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Centre">
+            <EditText
+                android:id="@+id/siteId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/centreReservation"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_weight="1"
+            android:hint="Name">
+
+            <EditText
+                android:id="@+id/siteName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fieldLayout"
+        android:id="@+id/ownerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Field">
+        android:hint="Owner">
 
         <EditText
-            android:id="@+id/fieldReservation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/customerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Customer">
-
-        <EditText
-            android:id="@+id/customerReservation"
+            android:id="@+id/siteOwner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -68,37 +60,52 @@
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/timeSlotLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:hint="Timeslot">
-
-            <AutoCompleteTextView
-                android:id="@+id/timeReservation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:layout_weight="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateReservationLayout"
+            android:id="@+id/dateSiteLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Date">
 
             <EditText
-                android:id="@+id/dateReservation"
+                android:id="@+id/dateSite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/timeSlotLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:hint="Timeslot">
+
+            <AutoCompleteTextView
+                android:id="@+id/timeSite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wasteAmountLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Collected Waste Amount">
+
+        <EditText
+            android:id="@+id/wasteAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonViewVolunteers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Volunteers" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,14 +113,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonReservationConfirm"
+            android:id="@+id/buttonSiteConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Confirm" />
 
         <Button
-            android:id="@+id/buttonReservationCancel"
+            android:id="@+id/buttonSiteCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -18,7 +18,8 @@ import ducle.greenapp.database.models.MyEntity;
 public class ModelUtils {
     public static String prefixId(String id, String prefix){
         if(!id.startsWith(prefix)){
-            return prefix + "_" + String.format("%04d", id);
+//            return prefix + "_" + String.format("%04d", id);
+            return prefix + "_" + id;
         }
         return id;
     }
