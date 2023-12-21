@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -20,11 +19,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ducle.greenapp.AppRepository;
+import ducle.greenapp.activities.MyFragment;
 import ducle.greenapp.activities.home.HomeActivity;
 import ducle.greenapp.R;
 import ducle.greenapp.database.models.user.User;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment

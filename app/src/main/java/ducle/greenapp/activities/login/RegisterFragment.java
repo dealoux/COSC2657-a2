@@ -15,16 +15,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import ducle.greenapp.R;
+import ducle.greenapp.activities.MyFragment;
 import ducle.greenapp.activities.map.MapsRegisterLocationFragment;
 
-public class RegisterFragment extends Fragment {
-    ActivityResultLauncher<Intent> launcher;
-    Intent data;
-
+public class RegisterFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -88,9 +85,5 @@ public class RegisterFragment extends Fragment {
                 popStack();
             }
         });
-    }
-
-    private void popStack(){
-        getParentFragmentManager().popBackStack();
     }
 }
