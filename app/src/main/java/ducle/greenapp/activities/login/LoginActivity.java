@@ -21,7 +21,7 @@ import java.util.GregorianCalendar;
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
 
-public class LoginActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,26 +33,6 @@ public class LoginActivity extends AppCompatActivity implements DatePickerDialog
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentFl, loginFragment);
         transaction.commit();
-    }
-
-    // Date picker activity
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
-        setDate((EditText) findViewById(R.id.dobRegister), cal);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void onDateClick(View view) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this);
-        datePickerDialog.show();
-        datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                EditText date = view.findViewById(R.id.dobRegister);
-                date.setText(dayOfMonth+ "-" + month + "-" +year);
-            }
-        });
     }
 
     @Override

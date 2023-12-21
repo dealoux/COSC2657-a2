@@ -65,8 +65,8 @@ public class ModelUtils {
     /**
      * This function split and trim the given line
      * */
-    public static String[] splitTrimLine(String line){
-        String result[] = line.trim().split("\\s*;\\s*");
+    public static String[] splitTrimLine(String line, String regex){
+        String result[] = line.trim().split("\\s*" + regex + "\\s*");
         for(String s : result){
             Log.d("splitTrimLine", s);
         }

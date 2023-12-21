@@ -7,20 +7,27 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.android.gms.maps.model.LatLng;
+
 @Entity(tableName = "User")
 public class User extends MyEntity implements Comparable<User> {
     @PrimaryKey
     @ColumnInfo(name = "user_id")
     @NonNull
     protected String id;
-    @ColumnInfo(name = "first name")
+    @ColumnInfo(name = "first_name")
     protected String fName;
-    @ColumnInfo(name = "last name")
+    @ColumnInfo(name = "last_name")
     protected String lName;
     @ColumnInfo(name = "username")
     protected String username;
     @ColumnInfo(name = "password")
     protected String password;
+
+    public User(String id, LatLng latLng, String fName, String lName, String username, String password) {
+        super(latLng);
+        initData(id, fName, lName, username, password);
+    }
 
     public User(String id, double latitude, double longitude, String fName, String lName, String username, String password) {
         super(latitude, longitude);
@@ -89,7 +96,7 @@ public class User extends MyEntity implements Comparable<User> {
     @Override
     public String toString() {
         return id + " " + fName + " " + lName + "\n"
-                + "Location: " + getLocation() + "\n";
+                + getLatLng().toString() + "\n";
     }
 
     @Override

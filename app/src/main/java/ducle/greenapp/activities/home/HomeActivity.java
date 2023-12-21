@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.map.MapsActivity;
 import ducle.greenapp.activities.site.ManageSiteActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -40,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonHomeBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(HomeActivity.this, MapsActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, ManageSiteActivity.class);
                 intent1.putExtras(intent);
                 launcher.launch(intent1);
             }

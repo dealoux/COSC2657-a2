@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GreenApp</string>
-    <string name="google_maps_key">AIzaSyDR2mQQXyRI5mP4TRoFzy4r00XjHRz_xz4</string>
+    <string name="google_maps_key">AIzaSyDPGEcL3MU93RCHHWu0FKXuYbPk3Uyh67w</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -11,6 +11,5 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
 </resources>

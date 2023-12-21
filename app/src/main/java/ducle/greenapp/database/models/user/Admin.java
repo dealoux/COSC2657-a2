@@ -5,8 +5,13 @@ import static ducle.greenapp.database.models.utils.ModelUtils.prefixId;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.google.android.gms.maps.model.LatLng;
+
 @Entity(tableName = "Admin")
 public class Admin extends User {
+    public Admin(String id, LatLng latLng, String fName, String lName, String username, String password) {
+        super(prefixId(id,"ADM"), latLng, fName, lName, username, password);
+    }
     public Admin(String id, double latitude, double longitude, String fName, String lName, String username, String password) {
         super(prefixId(id,"ADM"), latitude, longitude, fName, lName, username, password);
     }

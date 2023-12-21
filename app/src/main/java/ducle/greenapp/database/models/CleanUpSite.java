@@ -7,6 +7,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.android.gms.maps.model.LatLng;
+
 @Entity
 public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
     @PrimaryKey
@@ -24,28 +26,33 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
     @ColumnInfo(name = "collected_amount")
     private String collectedAmount;
 
+    public CleanUpSite(String id, LatLng latLng, String ownerId, String name, String date, String time, String collectedAmount) {
+        super(latLng);
+        initData(id, ownerId, name, date, time, collectedAmount);
+    }
+
     public CleanUpSite(String id, double latitude, double longitude, String ownerId, String name, String date, String time) {
         super(latitude, longitude);
-        initData(id, ownerId, name, date, time);
+        initData(id, ownerId, name, date, time, "");
     }
 
     public CleanUpSite(String id, String latitude, String longitude, String ownerId, String name, String date, String time) {
         super(latitude, longitude);
-        initData(id, ownerId, name, date, time);
+        initData(id, ownerId, name, date, time, "");
     }
 
     public CleanUpSite(String id, String location, String ownerId, String name, String date, String time) {
         super(location);
-        initData(id, ownerId, name, date, time);
+        initData(id, ownerId, name, date, time, "");
     }
 
-    private void initData(String id, String ownerId, String name, String date, String time){
+    private void initData(String id, String ownerId, String name, String date, String time, String collectedAmount){
         setId(id);
         this.ownerId = ownerId;
         this.name = name;
         this.date = date;
         this.time = time;
-        this.collectedAmount = "0";
+        this.collectedAmount = collectedAmount;
     }
 
     public String getId() {

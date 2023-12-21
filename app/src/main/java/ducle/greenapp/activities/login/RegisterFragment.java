@@ -1,5 +1,8 @@
 package ducle.greenapp.activities.login;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.ActivityUtils;
+import ducle.greenapp.activities.map.MapsRegisterLocationFragment;
 
 public class RegisterFragment extends Fragment {
+    ActivityResultLauncher<Intent> launcher;
+    Intent data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,24 +39,33 @@ public class RegisterFragment extends Fragment {
 
         EditText fName = (EditText) view.findViewById(R.id.fNameRegister);
         EditText lName = (EditText) view.findViewById(R.id.lNameRegister);
-        EditText dob = (EditText) view.findViewById(R.id.dobRegister);
-        EditText phone = (EditText) view.findViewById(R.id.phoneRegister);
-        EditText address = (EditText) view.findViewById(R.id.addressRegister);
+        EditText location = (EditText) view.findViewById(R.id.locationRegister);
         EditText username = (EditText) view.findViewById(R.id.usernameRegister);
         EditText password = (EditText) view.findViewById(R.id.passwordRegister);
         Button buttonConfirm = (Button) view.findViewById(R.id.buttonRegisterConfirm);
         Button buttonCancel = (Button) view.findViewById(R.id.buttonRegisterCancel);
 
-        dob.setOnClickListener(new View.OnClickListener() {
+        location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtils.datePickerDialog(getActivity().getSupportFragmentManager());
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentFl, new MapsRegisterLocationFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (fName.getText().toString().isEmpty() ||
+                        lName.getText().toString().isEmpty() ||
+                        location.getText().toString().isEmpty() ||
+                        username.getText().toString().isEmpty() ||
+                        password.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 //                String text = AppRepository.Instance().getUserManager().addCustomer(
 //                        fName.getText().toString(),
 //                        lName.getText().toString(),

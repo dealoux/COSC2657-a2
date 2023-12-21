@@ -26,20 +26,9 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".activities.map.MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".activities.browse.BrowseActivity"
-            android:exported="false" />
+            android:value="YOUR_API_KEY" />
         <activity
             android:name=".activities.site.ManageSiteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.site.MakeSiteActivity"
             android:exported="false" />
         <activity
             android:name=".activities.home.HomeActivity"

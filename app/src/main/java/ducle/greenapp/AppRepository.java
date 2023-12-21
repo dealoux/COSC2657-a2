@@ -8,8 +8,10 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
+import ducle.greenapp.database.converters.Converters;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.CleanUpSiteDao;
 import ducle.greenapp.database.models.relation.VolunteerSiteCrossRef;
@@ -22,6 +24,7 @@ import ducle.greenapp.database.models.user.VolunteerDao;
 import io.reactivex.rxjava3.core.Flowable;
 
 @Database(entities = {CleanUpSite.class, Volunteer.class, Admin.class, VolunteerSiteCrossRef.class}, version = 3)
+@TypeConverters(Converters.class)
 public abstract class AppRepository extends RoomDatabase {
     public abstract CleanUpSiteDao getCleanUpSiteDao();
     public abstract VolunteerDao getVolunteerDao();
