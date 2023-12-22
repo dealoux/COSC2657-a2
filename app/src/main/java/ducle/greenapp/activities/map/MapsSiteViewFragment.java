@@ -14,9 +14,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import ducle.greenapp.R;
+import java.util.List;
 
-public class MapsRegisterLocationFragment extends BaseMapsFragment {
+import ducle.greenapp.AppRepository;
+import ducle.greenapp.R;
+import ducle.greenapp.database.models.CleanUpSite;
+
+public class MapsSiteViewFragment extends BaseMapsFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -29,7 +33,7 @@ public class MapsRegisterLocationFragment extends BaseMapsFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Choose Your Location");
+        getActivity().setTitle("Choose a site or create a new one");
 
         Button useLocationButton = view.findViewById(R.id.uselocation_button);
         Button confirmLocationButton = view.findViewById(R.id.confirm_button);
@@ -50,21 +54,20 @@ public class MapsRegisterLocationFragment extends BaseMapsFragment {
     }
 
     @Override
-    public boolean onMyLocationButtonClick() {
-        myMap.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title("Current Location"));
-        return false;
-    }
-
-    @Override
     protected void handleMapsCallback() {
         super.handleMapsCallback();
 
-        myMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
+        List<CleanUpSite> sites = AppRepository.Instance(getContext()).getCleanUpSiteDao().getList();
 
+        for(CleanUpSite site : sites) {
+            myMap.addMarker(new MarkerOptions().position(site.getLatLng()).title(site.getName()));
+        }
+
+        myMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
             @Override
             public void onMapClick(LatLng latLng) {
                 updateLatLng(latLng);
-                myMap.addMarker(new MarkerOptions().position(latLng).title("User Marker"));
+                myMap.addMarker(new MarkerOptions().position(latLng).title("Clean Up Site"));
                 myMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             }
         });

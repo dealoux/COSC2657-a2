@@ -10,8 +10,6 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_activity_maps">MapsActivity</string>
     <string name="use_current_location">Use current location</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>

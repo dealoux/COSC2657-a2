@@ -33,11 +33,11 @@ public class SiteBrowseFragment extends MyFragment {
 
         Intent intent = getActivity().getIntent();
 
-        ListView reservationListView = (ListView) view.findViewById(R.id.browseListView);
+        ListView siteListView = (ListView) view.findViewById(R.id.browseListView);
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getVolunteerSiteDao().getVolunteerWithSites(intent.getStringExtra("userId")).siteList);
-        reservationListView.setAdapter(arrayAdapter);
+        siteListView.setAdapter(arrayAdapter);
 
-        reservationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        siteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView adapterView, View view, int i, long id) {
                 CleanUpSite reservation = (CleanUpSite) adapterView.getItemAtPosition(i);
