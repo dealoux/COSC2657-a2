@@ -19,19 +19,24 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.Task;
 
 import ducle.greenapp.R;
 import ducle.greenapp.activities.utils.MyFragment;
 
-public class BaseMapsFragment extends MyFragment implements GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+public class BaseMapsFragment extends MyFragment implements
+        GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.OnMyLocationChangeListener,
+        GoogleMap.OnMapClickListener,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener {
     protected static final int FINE_PERMISSION_REQUEST = 1;
     protected GoogleMap myMap;
 
     protected Location currentLocation;
     protected FusedLocationProviderClient fusedLocationProviderClient;
-
-    protected GoogleMap.OnMarkerClickListener onMarkerClickListener = marker -> false;
 
     @Nullable
     @Override
@@ -54,8 +59,6 @@ public class BaseMapsFragment extends MyFragment implements GoogleMap.OnMyLocati
         public void onMapReady(GoogleMap googleMap) {
             myMap = googleMap;
 
-            myMap.setOnMarkerClickListener(onMarkerClickListener);
-
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]
                         {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
@@ -63,6 +66,11 @@ public class BaseMapsFragment extends MyFragment implements GoogleMap.OnMyLocati
             }
 
             myMap.setMyLocationEnabled(true);
+
+            myMap.setOnMapClickListener(BaseMapsFragment.this);
+            myMap.setOnMarkerClickListener(BaseMapsFragment.this);
+            myMap.setOnInfoWindowClickListener(BaseMapsFragment.this);
+            myMap.setOnMyLocationChangeListener(BaseMapsFragment.this);
             myMap.setOnMyLocationButtonClickListener(BaseMapsFragment.this);
             myMap.setOnMyLocationClickListener(BaseMapsFragment.this);
 
@@ -92,12 +100,26 @@ public class BaseMapsFragment extends MyFragment implements GoogleMap.OnMyLocati
 
     @Override
     public boolean onMyLocationButtonClick() {
-        fetchLocation();
         return false;
     }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
+    }
+
+    @Override
+    public void onInfoWindowClick(@NonNull Marker marker) {
+
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        return false;
+    }
+
+    @Override
+    public void onMapClick(@NonNull LatLng latLng) {
+
     }
 
     protected void fetchLocation() {
