@@ -64,7 +64,7 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
         for(CleanUpSite site : sites) {
             myMap.addMarker(new MarkerOptions()
                     .position(site.getLatLng())
-                    .title(site.getTitle())
+                    .title(site.getId())
                     .snippet(site.getSnippet()));
         }
     }
@@ -94,22 +94,18 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
         currentLocation.setLatitude(marker.getPosition().latitude);
         currentLocation.setLongitude(marker.getPosition().longitude);
 
-        Intent intent = new Intent(getActivity(), CreateSiteActivity.class);
-        intent.putExtras(getActivity().getIntent());
-        intent.putExtra("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+        Intent intent = getActivity().getIntent();
+        Intent intent1 = new Intent(getActivity(), CreateSiteActivity.class);
+        intent1.putExtras(intent);
 
-        launcher.launch(intent);
+        if(!marker.getSnippet().contains(intent.getStringExtra("userId"))){
+            intent1.putExtra("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+        }
+        else{
+            intent1.putExtra("siteId", marker.getTitle());
+        }
 
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-//
-//        SiteEditFragment siteEditFragment = new SiteEditFragment();
-//        siteEditFragment.setArguments(bundle);
-//
-//        getActivity().getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragmentFl, siteEditFragment)
-//                .addToBackStack(null)
-//                .commit();
+        launcher.launch(intent1);
     }
 
     @Override

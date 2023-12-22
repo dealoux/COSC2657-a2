@@ -55,38 +55,33 @@ public class SiteEditFragment extends MyFragment {
             site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(bundle.getString("siteId"));
         }
         else{
+            String userId = intent.getStringExtra("userId");
+
             if(intent.getStringExtra("siteId") != null){
-                getActivity().setTitle("View Site");
                 site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(intent.getStringExtra("siteId"));
+
+                if(userId.equals(site.getOwnerId())){
+                    getActivity().setTitle("Edit Site");
+                }
+                else{
+                    getActivity().setTitle("View Site");
+                }
             }
             else{
                 getActivity().setTitle("Create Site");
                 buttonViewVolunteers.setVisibility(View.GONE);
-                site = AppRepository.Instance(getContext()).nextSite(intent.getParcelableExtra("latLng"), intent.getStringExtra("userId"));
+                site = AppRepository.Instance(getContext()).nextSite(intent.getParcelableExtra("latLng"), userId);
             }
         }
-
-//        if(bundle != null){
-//            if(bundle.getString("siteId") != null){
-//                getActivity().setTitle("Edit Site");
-//                site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(bundle.getString("siteId"));
-//            }
-//            else{
-//                getActivity().setTitle("Create Site");
-//                buttonViewVolunteers.setVisibility(View.GONE);
-//                site = AppRepository.Instance(getContext()).nextSite(bundle.getParcelable("Latlng"), intent.getStringExtra("userId"));
-//            }
-//        }
-//        else{
-//            getActivity().setTitle("View Site");
-//            site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(intent.getStringExtra("siteId"));
-//        }
 
         Volunteer owner = AppRepository.Instance(getContext()).getVolunteerDao().get(site.getOwnerId());
 
         siteId.setText(site.getId());
+        siteName.setText(site.getName());
         ownerData.setText(owner.getTitle());
         locationData.setText(site.getLatLng().toString());
+        dateSite.setText(site.getDate());
+        timeslot.setText(site.getTime());
         wasteData.setText(site.getCollectedAmount());
 
         timeslot.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, CleanUpSite.TIME_SLOTS));

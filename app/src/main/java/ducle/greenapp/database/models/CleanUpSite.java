@@ -126,7 +126,7 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
     }
 
     public String getSnippet(){
-        return latLng.toString() + "\n" + "Date: " + date + " " + time + "\n" + "Waste collected: " + collectedAmount;
+        return latLng.toString() + "\n" + "Owner: " + ownerId + "\n" + "Date: " + date + " " + time + "\n" + "Waste collected: " + collectedAmount;
     }
 
     @Override
