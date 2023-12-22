@@ -23,6 +23,11 @@ public class Admin extends User {
         super(prefixId(id,"ADM"), location, fName, lName, username, password);
     }
 
+    @Override
+    public String getTitle() {
+        return "Admin " + super.getTitle();
+    }
+
     @NonNull
     @Override
     public String toString(){

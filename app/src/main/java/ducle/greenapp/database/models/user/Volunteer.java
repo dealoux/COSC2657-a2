@@ -26,6 +26,11 @@ public class Volunteer extends User {
         super(prefixId(id,"VOL"), location, fName, lName, username, password);
     }
 
+    @Override
+    public String getTitle() {
+        return "Volunteer " + super.getTitle();
+    }
+
     @NonNull
     @Override
     public String toString(){

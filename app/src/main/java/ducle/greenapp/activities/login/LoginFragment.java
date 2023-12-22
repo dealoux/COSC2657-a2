@@ -75,6 +75,8 @@ public class LoginFragment extends MyFragment {
                 transaction.replace(R.id.fragmentFl, new RegisterFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+
+                Toast.makeText(getActivity(), "Double click on Location to open the map", Toast.LENGTH_LONG).show();
             }
         });
     }

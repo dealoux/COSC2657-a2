@@ -11,15 +11,13 @@ import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import ducle.greenapp.R;
 
-public class ManageSiteActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class CreateSiteActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +25,10 @@ public class ManageSiteActivity extends AppCompatActivity implements DatePickerD
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Fragment reservationFragment = new SiteBrowseFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentFl, reservationFragment);
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentFl, new SiteEditFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     // Date picker activity

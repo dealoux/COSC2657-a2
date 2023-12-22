@@ -37,9 +37,13 @@ public class SiteEditFragment extends MyFragment {
         Bundle bundle = getArguments();
 
         TextView siteId = (TextView) view.findViewById(R.id.siteId);
+        TextView siteName = (TextView) view.findViewById(R.id.siteName);
         TextView ownerData = (TextView) view.findViewById(R.id.siteOwner);
+        TextView locationData = (TextView) view.findViewById(R.id.siteLocation);
         EditText dateSite = (EditText) view.findViewById(R.id.dateSite);
         AutoCompleteTextView timeslot = (AutoCompleteTextView) view.findViewById(R.id.timeSite);
+        TextView wasteData = (TextView) view.findViewById(R.id.wasteAmount);
+
         Button buttonViewVolunteers = (Button) view.findViewById(R.id.buttonViewVolunteers);
         Button buttonConfirm = (Button) view.findViewById(R.id.buttonSiteConfirm);
         Button buttonCancel = (Button) view.findViewById(R.id.buttonSiteCancel);
@@ -51,14 +55,39 @@ public class SiteEditFragment extends MyFragment {
             site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(bundle.getString("siteId"));
         }
         else{
-            getActivity().setTitle("Make Site");
-            site = AppRepository.Instance(getContext()).nextSite(intent.getParcelableExtra("Latlng"), intent.getStringExtra("userId"));
+            if(intent.getStringExtra("siteId") != null){
+                getActivity().setTitle("View Site");
+                site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(intent.getStringExtra("siteId"));
+            }
+            else{
+                getActivity().setTitle("Create Site");
+                buttonViewVolunteers.setVisibility(View.GONE);
+                site = AppRepository.Instance(getContext()).nextSite(intent.getParcelableExtra("latLng"), intent.getStringExtra("userId"));
+            }
         }
+
+//        if(bundle != null){
+//            if(bundle.getString("siteId") != null){
+//                getActivity().setTitle("Edit Site");
+//                site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(bundle.getString("siteId"));
+//            }
+//            else{
+//                getActivity().setTitle("Create Site");
+//                buttonViewVolunteers.setVisibility(View.GONE);
+//                site = AppRepository.Instance(getContext()).nextSite(bundle.getParcelable("Latlng"), intent.getStringExtra("userId"));
+//            }
+//        }
+//        else{
+//            getActivity().setTitle("View Site");
+//            site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(intent.getStringExtra("siteId"));
+//        }
 
         Volunteer owner = AppRepository.Instance(getContext()).getVolunteerDao().get(site.getOwnerId());
 
         siteId.setText(site.getId());
-        ownerData.setText(owner.toString());
+        ownerData.setText(owner.getTitle());
+        locationData.setText(site.getLatLng().toString());
+        wasteData.setText(site.getCollectedAmount());
 
         timeslot.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, CleanUpSite.TIME_SLOTS));
 
@@ -72,8 +101,10 @@ public class SiteEditFragment extends MyFragment {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                site.setName(siteName.getText().toString());
                 site.setDate(dateSite.getText().toString());
                 site.setTime(timeslot.getText().toString());
+                site.setCollectedAmount(wasteData.getText().toString());
 
                 if(bundle == null){
                     String result = AppRepository.Instance(getContext()).addSite(site);

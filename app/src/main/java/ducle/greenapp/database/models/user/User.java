@@ -92,6 +92,10 @@ public class User extends MyEntity implements Comparable<User> {
         this.password = password;
     }
 
+    public String getTitle() {
+        return id + " " + fName + " " + lName;
+    }
+
     @NonNull
     @Override
     public String toString() {

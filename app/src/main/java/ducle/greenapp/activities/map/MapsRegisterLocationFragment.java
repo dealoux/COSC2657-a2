@@ -32,6 +32,18 @@ public class MapsRegisterLocationFragment extends BaseMapsFragment {
     }
 
     @Override
+    public void onMapClick(@NonNull LatLng latLng) {
+        updateLatLng(latLng);
+        myMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("User Marker")
+                .snippet(latLng.toString()));
+        myMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        Toast.makeText(getActivity(), "Click on the marker to view more info and proceed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public boolean onMyLocationButtonClick() {
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
@@ -44,6 +56,7 @@ public class MapsRegisterLocationFragment extends BaseMapsFragment {
         return super.onMyLocationButtonClick();
     }
 
+
     @Override
     public void onInfoWindowClick(@NonNull Marker marker) {
         currentLocation.setLatitude(marker.getPosition().latitude);
@@ -55,18 +68,6 @@ public class MapsRegisterLocationFragment extends BaseMapsFragment {
     public boolean onMarkerClick(@NonNull Marker marker) {
         Toast.makeText(getActivity(), "Click on the info window to confirm your location", Toast.LENGTH_SHORT).show();
         return super.onMarkerClick(marker);
-    }
-
-    @Override
-    public void onMapClick(@NonNull LatLng latLng) {
-        updateLatLng(latLng);
-        myMap.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title("User Marker")
-                .snippet(latLng.toString()));
-        myMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        Toast.makeText(getActivity(), "Click on the marker to view more info and proceed", Toast.LENGTH_SHORT).show();
     }
 
     @Override

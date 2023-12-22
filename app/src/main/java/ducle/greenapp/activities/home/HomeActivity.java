@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.Button;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.site.ManageSiteActivity;
+import ducle.greenapp.activities.map.MapActivity;
+import ducle.greenapp.activities.site.SiteActivity;
 
 public class HomeActivity extends AppCompatActivity {
     @Override
@@ -39,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonHomeOpenMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(HomeActivity.this, ManageSiteActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, MapActivity.class);
                 intent1.putExtras(intent);
                 launcher.launch(intent1);
             }
@@ -49,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonHomeManageSite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(HomeActivity.this, ManageSiteActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, SiteActivity.class);
                 intent1.putExtras(intent);
                 launcher.launch(intent1);
             }

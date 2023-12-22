@@ -1,25 +1,35 @@
 package ducle.greenapp.activities.map;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
+import ducle.greenapp.activities.site.CreateSiteActivity;
 import ducle.greenapp.database.models.CleanUpSite;
 
 public class MapsSiteViewFragment extends BaseMapsFragment {
+    ActivityResultLauncher<Intent> launcher;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,6 +43,16 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
         super.onViewCreated(view, savedInstanceState);
 
         getActivity().setTitle("Choose a site or create a new one");
+
+         launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK){
+                        Intent data = result.getData();
+                        Toast.makeText(getActivity(), (String) data.getExtras().get("response"), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
     @Override
@@ -42,7 +62,10 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
         List<CleanUpSite> sites = AppRepository.Instance(getContext()).getCleanUpSiteDao().getList();
 
         for(CleanUpSite site : sites) {
-            myMap.addMarker(new MarkerOptions().position(site.getLatLng()).title(site.getName()));
+            myMap.addMarker(new MarkerOptions()
+                    .position(site.getLatLng())
+                    .title(site.getTitle())
+                    .snippet(site.getSnippet()));
         }
     }
 
@@ -57,7 +80,41 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
         updateLatLng(latLng);
-        myMap.addMarker(new MarkerOptions().position(latLng).title("Clean Up Site"));
+        myMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Your Maker")
+                .snippet(latLng.toString()));
         myMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        Toast.makeText(getActivity(), "Click on the marker to view more info and proceed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onInfoWindowClick(@NonNull Marker marker) {
+        currentLocation.setLatitude(marker.getPosition().latitude);
+        currentLocation.setLongitude(marker.getPosition().longitude);
+
+        Intent intent = new Intent(getActivity(), CreateSiteActivity.class);
+        intent.putExtras(getActivity().getIntent());
+        intent.putExtra("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+
+        launcher.launch(intent);
+
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+//
+//        SiteEditFragment siteEditFragment = new SiteEditFragment();
+//        siteEditFragment.setArguments(bundle);
+//
+//        getActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragmentFl, siteEditFragment)
+//                .addToBackStack(null)
+//                .commit();
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        Toast.makeText(getActivity(), "Click on the info window to confirm the site", Toast.LENGTH_SHORT).show();
+        return super.onMarkerClick(marker);
     }
 }

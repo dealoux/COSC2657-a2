@@ -78,7 +78,7 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
     }
 
     public void setId(String id) {
-        this.id = prefixId(this.id, "SITE");
+        this.id = prefixId(id, "SITE");
     }
 
     public String getOwnerId() {
@@ -119,6 +119,14 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
 
     public void setCollectedAmount(String collectedAmount) {
         this.collectedAmount = collectedAmount;
+    }
+
+    public String getTitle(){
+        return id + " " + name;
+    }
+
+    public String getSnippet(){
+        return latLng.toString() + "\n" + "Date: " + date + " " + time + "\n" + "Waste collected: " + collectedAmount;
     }
 
     @Override

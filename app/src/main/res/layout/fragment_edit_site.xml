@@ -54,6 +54,21 @@
             android:focusable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/locationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location">
+
+        <EditText
+            android:id="@+id/siteLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,7 +85,8 @@
                 android:id="@+id/dateSite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date" />
+                android:inputType="date"
+                android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
