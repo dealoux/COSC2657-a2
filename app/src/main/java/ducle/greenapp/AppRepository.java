@@ -51,6 +51,7 @@ public abstract class AppRepository extends RoomDatabase {
 
     private static AppRepository create(final Context context) {
         return Room.databaseBuilder(context, AppRepository.class, DB_NAME)
+                .createFromAsset("database/"+DB_NAME)
                 .allowMainThreadQueries()
                 .build();
     }
