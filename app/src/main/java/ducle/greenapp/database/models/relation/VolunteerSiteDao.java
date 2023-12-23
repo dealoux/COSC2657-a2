@@ -7,20 +7,20 @@ import androidx.room.Transaction;
 import java.util.List;
 
 @Dao
-public interface VolunteerSiteDao {
+public abstract class VolunteerSiteDao {
     @Transaction
     @Query("SELECT * FROM Volunteer")
-    List<VolunteerWithSites> getVolunteerWithSites();
+    public abstract List<VolunteerWithOwnedSites> getVolunteerWithSites();
 
     @Transaction
-    @Query("SELECT * FROM Volunteer WHERE user_id = :volunteerId")
-    VolunteerWithSites getVolunteerWithSites(String volunteerId);
+    @Query("SELECT * FROM Volunteer WHERE id = :volunteerId")
+    public abstract VolunteerWithOwnedSites getVolunteerWithSites(String volunteerId);
 
     @Transaction
     @Query("SELECT * FROM CleanUpSite")
-    List<SiteWithVolunteers> getSiteWithVolunteers();
+    public abstract List<SiteWithVolunteers> getSiteWithVolunteers();
 
     @Transaction
-    @Query("SELECT * FROM CleanUpSite WHERE site_id = :siteId")
-    SiteWithVolunteers getSiteWithVolunteers(String siteId);
+    @Query("SELECT * FROM CleanUpSite WHERE id = :siteId")
+    public abstract SiteWithVolunteers getSiteWithVolunteers(String siteId);
 }

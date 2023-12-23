@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyFragment;
+import ducle.greenapp.activities.MyFragment;
 import ducle.greenapp.activities.map.MapsRegisterLocationFragment;
 
 public class RegisterFragment extends MyFragment {

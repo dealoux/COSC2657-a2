@@ -9,13 +9,13 @@ import ducle.greenapp.database.models.MyEntityDao;
 
 @Dao
 public interface AdminDao extends MyEntityDao<Admin> {
-    @Query("SELECT COUNT(user_id) FROM Admin")
+    @Query("SELECT COUNT(id) FROM Admin")
     int getCount();
 
     @Query("SELECT * FROM Admin")
     List<Admin> getList();
 
-    @Query("SELECT * FROM Admin WHERE user_id = :id")
+    @Query("SELECT * FROM Admin WHERE id = :id")
     Admin get(String id);
 
     @Query("SELECT * FROM Admin WHERE username = :username")

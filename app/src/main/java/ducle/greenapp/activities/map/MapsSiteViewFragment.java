@@ -42,7 +42,7 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Choose a site or create a new one");
+        getActivity().setTitle("Choose or create a site");
 
          launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

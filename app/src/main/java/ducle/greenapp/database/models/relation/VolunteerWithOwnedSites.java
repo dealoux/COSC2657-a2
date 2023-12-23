@@ -9,18 +9,17 @@ import java.util.List;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.user.Volunteer;
 
-public class SiteWithVolunteers {
+public class VolunteerWithOwnedSites {
     @Embedded
-    public CleanUpSite site;
+    public Volunteer volunteer;
 
     @Relation(
             parentColumn = "id",
-            entity = Volunteer.class,
+            entity = CleanUpSite.class,
             entityColumn = "id",
             associateBy = @Junction(value = VolunteerSiteCrossRef.class,
-                    parentColumn = "site_id",
-                    entityColumn = "user_id"
-            )
+                    parentColumn = "user_id",
+                    entityColumn = "site_id")
     )
-    public List<Volunteer> volunteerList;
+    public List<CleanUpSite> ownedSites;
 }

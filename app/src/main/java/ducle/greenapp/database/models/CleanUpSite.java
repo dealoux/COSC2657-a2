@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -20,10 +19,6 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
             Arrays.asList("7:00", "9:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00")
     );
 
-    @PrimaryKey
-    @ColumnInfo(name = "site_id")
-    @NonNull
-    protected String id;
     @ColumnInfo(name = "owner_id")
     private String ownerId;
     @ColumnInfo(name = "name")
@@ -73,11 +68,8 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
         this.collectedAmount = collectedAmount;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    @Override
+    public void setId(@NonNull String id) {
         this.id = prefixId(id, "SITE");
     }
 

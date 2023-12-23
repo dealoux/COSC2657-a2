@@ -15,7 +15,6 @@ public class Volunteer extends User {
 
     public Volunteer(String id, double latitude, double longitude, String fName, String lName, String username, String password) {
         super(prefixId(id,"VOL"), latitude, longitude, fName, lName, username, password);
-
     }
 
     public Volunteer(String id, String latitude, String longitude, String fName, String lName, String username, String password) {

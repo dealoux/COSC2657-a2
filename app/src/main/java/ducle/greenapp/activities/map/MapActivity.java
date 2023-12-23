@@ -1,23 +1,20 @@
 package ducle.greenapp.activities.map;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
+import ducle.greenapp.activities.MyActivity;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends MyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framelayout);
 
-        AppRepository.Instance(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentFl, new MapsSiteViewFragment())
-                .addToBackStack(null)
+                .add(R.id.fragmentFl, new MapsSiteViewFragment())
                 .commit();
     }
 }

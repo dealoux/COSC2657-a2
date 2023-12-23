@@ -2,13 +2,18 @@ package ducle.greenapp.activities.login;
 
 import static android.app.Activity.RESULT_OK;
 
+import static ducle.greenapp.activities.map.BaseMapsFragment.FINE_PERMISSION_REQUEST;
+
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -19,12 +24,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ducle.greenapp.AppRepository;
-import ducle.greenapp.activities.utils.MyFragment;
+import ducle.greenapp.activities.MyFragment;
 import ducle.greenapp.activities.home.HomeActivity;
 import ducle.greenapp.R;
 import ducle.greenapp.database.models.user.User;
 
-public class LoginFragment extends MyFragment {
+public class LoginFragment extends MyFragment implements ActivityCompat.OnRequestPermissionsResultCallback{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -34,8 +39,12 @@ public class LoginFragment extends MyFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         getActivity().setTitle("Login");
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]
+                    {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
+        }
 
         EditText username = (EditText) view.findViewById(R.id.usernameLogin);
         EditText password = (EditText) view.findViewById(R.id.passwordLogin);
@@ -79,5 +88,16 @@ public class LoginFragment extends MyFragment {
                 Toast.makeText(getActivity(), "Double click on Location to open the map", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if((requestCode == FINE_PERMISSION_REQUEST) && (grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+        }
+        else{
+            Toast.makeText(getActivity(), "Permission denied, please allow permission to access location", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(getActivity(), new String[]
+                    {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
+        }
     }
 }

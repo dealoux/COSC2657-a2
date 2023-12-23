@@ -24,8 +24,13 @@ import ducle.greenapp.database.models.user.User;
 import ducle.greenapp.database.models.user.Volunteer;
 import ducle.greenapp.database.models.user.VolunteerDao;
 
-@Database(entities = {CleanUpSite.class, Volunteer.class, Admin.class, VolunteerSiteCrossRef.class}, version = 3)
 @TypeConverters(Converters.class)
+@Database(entities = {
+        CleanUpSite.class,
+        Volunteer.class,
+        Admin.class,
+        VolunteerSiteCrossRef.class,
+}, version = 1)
 public abstract class AppRepository extends RoomDatabase {
     public abstract CleanUpSiteDao getCleanUpSiteDao();
     public abstract VolunteerDao getVolunteerDao();

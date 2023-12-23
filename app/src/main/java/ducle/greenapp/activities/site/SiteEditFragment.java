@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyFragment;
+import ducle.greenapp.activities.MyFragment;
 import ducle.greenapp.activities.utils.ActivityUtils;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.user.Volunteer;

@@ -1,13 +1,13 @@
 package ducle.greenapp.activities.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
+import ducle.greenapp.activities.MyActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends MyActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,8 +16,7 @@ public class LoginActivity extends AppCompatActivity {
         AppRepository.Instance(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentFl, new LoginFragment())
-                .addToBackStack(null)
+                .add(R.id.fragmentFl, new LoginFragment())
                 .commit();
     }
 }

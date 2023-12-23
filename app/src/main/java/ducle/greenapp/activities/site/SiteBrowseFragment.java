@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyFragment;
+import ducle.greenapp.activities.MyFragment;
 import ducle.greenapp.database.models.CleanUpSite;
 
 public class SiteBrowseFragment extends MyFragment {
@@ -34,7 +34,7 @@ public class SiteBrowseFragment extends MyFragment {
         Intent intent = getActivity().getIntent();
 
         ListView siteListView = (ListView) view.findViewById(R.id.browseListView);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getVolunteerSiteDao().getVolunteerWithSites(intent.getStringExtra("userId")).siteList);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getVolunteerSiteDao().getVolunteerWithSites(intent.getStringExtra("userId")).ownedSites);
         siteListView.setAdapter(arrayAdapter);
 
         siteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

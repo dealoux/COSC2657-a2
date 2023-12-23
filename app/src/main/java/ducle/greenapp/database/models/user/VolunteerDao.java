@@ -9,13 +9,13 @@ import ducle.greenapp.database.models.MyEntityDao;
 
 @Dao
 public interface VolunteerDao extends MyEntityDao<Volunteer> {
-    @Query("SELECT COUNT(user_id) FROM Volunteer")
+    @Query("SELECT COUNT(id) FROM Volunteer")
     int getCount();
 
     @Query("SELECT * FROM Volunteer")
     List<Volunteer> getList();
 
-    @Query("SELECT * FROM Volunteer WHERE user_id = :id")
+    @Query("SELECT * FROM Volunteer WHERE id = :id")
     Volunteer get(String id);
 
     @Query("SELECT * FROM Volunteer WHERE username = :username")

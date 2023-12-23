@@ -23,16 +23,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.Task;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyFragment;
+import ducle.greenapp.activities.MyFragment;
 
 public class BaseMapsFragment extends MyFragment implements
+        OnMapReadyCallback,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMyLocationChangeListener,
         GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerClickListener,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener {
-    protected static final int FINE_PERMISSION_REQUEST = 1;
+    public static final int FINE_PERMISSION_REQUEST = 1;
     protected GoogleMap myMap;
 
     protected Location currentLocation;
@@ -50,37 +51,39 @@ public class BaseMapsFragment extends MyFragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]
+                    {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
+        }
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         fetchLocation();
     }
 
-    protected OnMapReadyCallback callback = new OnMapReadyCallback() {
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            myMap = googleMap;
-
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]
-                        {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
-                return;
-            }
-
-            myMap.setMyLocationEnabled(true);
-
-            myMap.setOnMapClickListener(BaseMapsFragment.this);
-            myMap.setOnMarkerClickListener(BaseMapsFragment.this);
-            myMap.setOnInfoWindowClickListener(BaseMapsFragment.this);
-            myMap.setOnMyLocationChangeListener(BaseMapsFragment.this);
-            myMap.setOnMyLocationButtonClickListener(BaseMapsFragment.this);
-            myMap.setOnMyLocationClickListener(BaseMapsFragment.this);
-
-            myMap.getUiSettings().setZoomControlsEnabled(true);
-            myMap.getUiSettings().setMyLocationButtonEnabled(true);
-            myMap.getUiSettings().setCompassEnabled(true);
-
-            handleMapsCallback();
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]
+                    {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
         }
-    };
+
+        myMap = googleMap;
+
+        myMap.setMyLocationEnabled(true);
+
+        myMap.setOnMapClickListener(BaseMapsFragment.this);
+        myMap.setOnMarkerClickListener(BaseMapsFragment.this);
+        myMap.setOnInfoWindowClickListener(BaseMapsFragment.this);
+        myMap.setOnMyLocationChangeListener(BaseMapsFragment.this);
+        myMap.setOnMyLocationButtonClickListener(BaseMapsFragment.this);
+        myMap.setOnMyLocationClickListener(BaseMapsFragment.this);
+
+        myMap.getUiSettings().setZoomControlsEnabled(true);
+        myMap.getUiSettings().setMyLocationButtonEnabled(true);
+        myMap.getUiSettings().setCompassEnabled(true);
+
+        handleMapsCallback();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -126,7 +129,6 @@ public class BaseMapsFragment extends MyFragment implements
         if ((ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(getActivity(), new String[]
                     {android.Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_REQUEST);
-            return;
         }
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
@@ -136,7 +138,7 @@ public class BaseMapsFragment extends MyFragment implements
 
                 SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                 if (mapFragment != null) {
-                    mapFragment.getMapAsync(callback);
+                    mapFragment.getMapAsync(this);
                 }
             }
         });

@@ -11,10 +11,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 @Entity(tableName = "User")
 public class User extends MyEntity implements Comparable<User> {
-    @PrimaryKey
-    @ColumnInfo(name = "user_id")
-    @NonNull
-    protected String id;
     @ColumnInfo(name = "first_name")
     protected String fName;
     @ColumnInfo(name = "last_name")
@@ -50,14 +46,6 @@ public class User extends MyEntity implements Comparable<User> {
         this.lName = lName;
         this.username = username;
         this.password = password;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getfName() {

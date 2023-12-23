@@ -1,7 +1,9 @@
 package ducle.greenapp.database.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -9,6 +11,11 @@ import ducle.greenapp.database.models.utils.ModelUtils;
 
 @Entity
 public abstract class MyEntity {
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @NonNull
+    protected String id;
+
     @ColumnInfo(name = "latLng")
     protected LatLng latLng;
 
@@ -26,6 +33,15 @@ public abstract class MyEntity {
 
     public MyEntity(String location) {
         setLatLng(location);
+    }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public LatLng getLatLng() {
