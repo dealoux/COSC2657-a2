@@ -19,28 +19,32 @@ public class User extends MyEntity {
     @ColumnInfo(name = "password")
     protected String password;
 
+    public User(String id){
+        super(id);
+        initData("", "", "", "");
+    }
+
     public User(String id, LatLng latLng, String fName, String lName, String username, String password) {
-        super(latLng);
-        initData(id, fName, lName, username, password);
+        super(id, latLng);
+        initData(fName, lName, username, password);
     }
 
     public User(String id, double latitude, double longitude, String fName, String lName, String username, String password) {
-        super(latitude, longitude);
-        initData(id, fName, lName, username, password);
+        super(id, latitude, longitude);
+        initData(fName, lName, username, password);
     }
 
     public User(String id, String latitude, String longitude, String fName, String lName, String username, String password) {
         super(latitude, longitude);
-        initData(id, fName, lName, username, password);
+        initData(fName, lName, username, password);
     }
 
     public User(String id, String location, String fName, String lName, String username, String password) {
         super(location);
-        initData(id, fName, lName, username, password);
+        initData(fName, lName, username, password);
     }
 
-    private void initData(String id, String fName, String lName, String username, String password){
-        setId(id);
+    private void initData(String fName, String lName, String username, String password){
         this.fName = fName;
         this.lName = lName;
         this.username = username;

@@ -1,4 +1,4 @@
-package ducle.greenapp.activities.site;
+package ducle.greenapp.activities.volunteer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +17,12 @@ import androidx.annotation.Nullable;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.utils.ActivityUtils;
-import ducle.greenapp.activities.volunteer.VolunteerBrowseFragment;
+import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.user.Volunteer;
 
-public class SiteEditFragment extends MyFragment {
+public class VolunteerEditFragment extends MyFragment {
     private static final int CREATE = 0;
     private static final int EDIT = 1;
     private static final int JOIN = 2;
@@ -34,7 +33,7 @@ public class SiteEditFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_site, container, false);
+        return inflater.inflate(R.layout.fragment_edit_volunteer, container, false);
     }
 
     @Override

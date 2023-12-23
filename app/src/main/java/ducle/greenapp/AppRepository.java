@@ -72,7 +72,6 @@ public abstract class AppRepository extends RoomDatabase {
         return new CleanUpSite(String.valueOf(getCleanUpSiteDao().getCount() + 1), latLng, ownerId);
     }
 
-
     /**
      * Add a new site object to the database
      * @param site
@@ -81,6 +80,22 @@ public abstract class AppRepository extends RoomDatabase {
         getCleanUpSiteDao().insert(site);
         getVolunteerSiteDao().insert(site.getOwnerId(), site.getId());
         return "Added " + site.getTitle();
+    }
+
+    /**
+     * Return a new basic volunteer object with the next available id
+     */
+    public Volunteer nextVolunteer(){
+        return new Volunteer(String.valueOf(getVolunteerDao().getCount() + 1));
+    }
+
+    /**
+     * Add a new volunteer object to the database
+     * @param volunteer
+     */
+    public String addVolunteer(Volunteer volunteer){
+        getVolunteerDao().insert(volunteer);
+        return "Added " + volunteer.getTitle();
     }
 
     /**

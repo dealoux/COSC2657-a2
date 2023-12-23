@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -80,10 +81,16 @@ public class LoginFragment extends MyFragment implements ActivityCompat.OnReques
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentFl, new RegisterFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username.getText().toString());
+                bundle.putString("password", password.getText().toString());
+
+                Fragment registerFragment = new RegisterFragment();
+                registerFragment.setArguments(bundle);
+                getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentFl, registerFragment)
+                    .addToBackStack(null)
+                    .commit();
 
                 Toast.makeText(getActivity(), "Double click on Location to open the map", Toast.LENGTH_LONG).show();
             }

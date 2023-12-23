@@ -32,35 +32,34 @@ public class CleanUpSite extends MyEntity{
 
     @Ignore
     public CleanUpSite(String id, LatLng latLng, String ownerId) {
-        super(latLng);
-        initData(id, ownerId, "", "", "", "");
+        super(id, latLng);
+        initData(ownerId, "", "", "", "");
     }
 
     public CleanUpSite(String id, LatLng latLng, String ownerId, String name, String date, String time, String collectedAmount) {
-        super(latLng);
-        initData(id, ownerId, name, date, time, collectedAmount);
+        super(id, latLng);
+        initData(ownerId, name, date, time, collectedAmount);
     }
 
     @Ignore
     public CleanUpSite(String id, double latitude, double longitude, String ownerId, String name, String date, String time) {
-        super(latitude, longitude);
-        initData(id, ownerId, name, date, time, "");
+        super(id, latitude, longitude);
+        initData(ownerId, name, date, time, "");
     }
 
     @Ignore
     public CleanUpSite(String id, String latitude, String longitude, String ownerId, String name, String date, String time) {
-        super(latitude, longitude);
-        initData(id, ownerId, name, date, time, "");
+        super(id, latitude, longitude);
+        initData(ownerId, name, date, time, "");
     }
 
     @Ignore
     public CleanUpSite(String id, String location, String ownerId, String name, String date, String time) {
-        super(location);
-        initData(id, ownerId, name, date, time, "");
+        super(id, location);
+        initData(ownerId, name, date, time, "");
     }
 
-    private void initData(String id, String ownerId, String name, String date, String time, String collectedAmount){
-        setId(id);
+    private void initData(String ownerId, String name, String date, String time, String collectedAmount){
         this.ownerId = ownerId;
         this.name = name;
         this.date = date;

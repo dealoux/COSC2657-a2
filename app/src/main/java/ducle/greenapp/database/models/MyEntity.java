@@ -19,19 +19,28 @@ public class MyEntity implements Comparable<MyEntity> {
     @ColumnInfo(name = "latLng")
     protected LatLng latLng;
 
-    public MyEntity(LatLng latLng) {
+    public MyEntity(String id){
+        setId(id);
+        setLatLng(0, 0);
+    }
+
+    public MyEntity(String id, LatLng latLng) {
+        setId(id);
         setLatLng(latLng);
     }
 
-    public MyEntity(double latitude, double longitude) {
+    public MyEntity(String id, double latitude, double longitude) {
+        setId(id);
         setLatLng(latitude, longitude);
     }
 
-    public MyEntity(String latitude, String longitude) {
+    public MyEntity(String id, String latitude, String longitude) {
+        setId(id);
         setLatLng(latitude, longitude);
     }
 
-    public MyEntity(String location) {
+    public MyEntity(String id, String location) {
+        setId(id);
         setLatLng(location);
     }
 
