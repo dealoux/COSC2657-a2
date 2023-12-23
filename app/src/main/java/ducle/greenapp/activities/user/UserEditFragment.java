@@ -1,38 +1,42 @@
-package ducle.greenapp.activities.login;
+package ducle.greenapp.activities.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewGroup;;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.map.MapsRegisterLocationFragment;
-import ducle.greenapp.database.models.user.Volunteer;
+import ducle.greenapp.activities.utils.MyFragment;
+import ducle.greenapp.database.models.user.User;
 
-public class RegisterFragment extends MyFragment {
+public class UserEditFragment extends MyFragment {
+    private static final int CREATE = 0;
+    private static final int EDIT = 1;
+
+    private int state;
     private LatLng latLng;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_volunteer, container, false);
+        return inflater.inflate(R.layout.fragment_edit_user, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Register");
+
+        Bundle bundle = getArguments();
 
         EditText userId = (EditText) view.findViewById(R.id.userId);
         EditText userType = (EditText) view.findViewById(R.id.userType);
@@ -43,23 +47,37 @@ public class RegisterFragment extends MyFragment {
         EditText password = (EditText) view.findViewById(R.id.password);
         Button buttonConfirm = (Button) view.findViewById(R.id.buttonConfirm);
 
+        User user;
 
-        Volunteer volunteer = AppRepository.Instance(getContext()).nextVolunteer();
+        if(bundle.getString("userId") == null){
+            state = CREATE;
+            getActivity().setTitle("Register");
+            user = AppRepository.Instance(getContext()).nextVolunteer();
+            username.setText(bundle.getString("username"));
+            password.setText(bundle.getString("password"));
+        }
+        else{
+            state = EDIT;
+            getActivity().setTitle("Edit Profile");
+            user = AppRepository.Instance(getContext()).getUser(bundle.getString("userId"));
+            username.setText(user.getUsername());
+            password.setText(user.getPassword());
+            latLng = user.getLatLng();
+        }
 
-        Bundle bundle = getArguments();
-
-        userId.setText(volunteer.getId());
-        userType.setText("Volunteer");
-        username.setText(bundle.getString("username"));
-        password.setText(bundle.getString("password"));
+        userId.setText(user.getId());
+        userType.setText(user.getClass().getSimpleName());
+        fName.setText(user.getfName());
+        lName.setText(user.getlName());
+        location.setText(user.getLatLng().toString());
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentFl, new MapsRegisterLocationFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentFl, new MapsRegisterLocationFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -79,19 +97,29 @@ public class RegisterFragment extends MyFragment {
                     Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    if(!AppRepository.Instance(getContext()).validateUsername(username.getText().toString())) {
+                    if(state == CREATE && !AppRepository.Instance(getContext()).validateUsername(username.getText().toString())) {
                         Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    volunteer.setLatLng(latLng);
-                    volunteer.setfName(fName.getText().toString());
-                    volunteer.setlName(lName.getText().toString());
-                    volunteer.setUsername(username.getText().toString());
-                    volunteer.setPassword(password.getText().toString());
+                    user.setLatLng(latLng);
+                    user.setfName(fName.getText().toString());
+                    user.setlName(lName.getText().toString());
+                    user.setUsername(username.getText().toString());
+                    user.setPassword(password.getText().toString());
 
-                    String text = AppRepository.Instance(getContext()).addVolunteer(volunteer);
-                    Toast.makeText(getActivity(), "Registered User " + text, Toast.LENGTH_SHORT).show();
+                    String text = "";
+
+                    switch (state){
+                        case CREATE:
+                            text = AppRepository.Instance(getContext()).addUser(user);
+                            break;
+                        case EDIT:
+                            text = AppRepository.Instance(getContext()).updateUser(user);
+                            break;
+                    }
+
+                    Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                     popStack();
                 }
             }

@@ -1,4 +1,4 @@
-package ducle.greenapp.activities.volunteer;
+package ducle.greenapp.activities.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import ducle.greenapp.R;
 import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.database.models.user.Volunteer;
 
-public class VolunteerBrowseFragment extends MyFragment {
+public class UserBrowseFragment extends MyFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

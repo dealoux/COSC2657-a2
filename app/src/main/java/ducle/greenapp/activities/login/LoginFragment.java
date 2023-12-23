@@ -14,8 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ducle.greenapp.AppRepository;
+import ducle.greenapp.activities.user.UserEditFragment;
 import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.home.HomeActivity;
 import ducle.greenapp.R;
@@ -85,7 +84,7 @@ public class LoginFragment extends MyFragment implements ActivityCompat.OnReques
                 bundle.putString("username", username.getText().toString());
                 bundle.putString("password", password.getText().toString());
 
-                Fragment registerFragment = new RegisterFragment();
+                UserEditFragment registerFragment = new UserEditFragment();
                 registerFragment.setArguments(bundle);
                 getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragmentFl, registerFragment)

@@ -30,6 +30,9 @@
             android:name=".activities.site.CreateSiteActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.user.UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.home.HomeActivity"
             android:exported="false" />
         <activity

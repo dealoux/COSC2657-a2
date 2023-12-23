@@ -1,21 +1,18 @@
-package ducle.greenapp.activities.home;
+package ducle.greenapp.activities.user;
 
 import android.os.Bundle;
 
-import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.utils.MyActivity;
+import ducle.greenapp.activities.utils.MyDatePickerActivity;
 
-public class HomeActivity extends MyActivity {
+public class UserActivity extends MyDatePickerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framelayout);
 
-        AppRepository.Instance(this);
-
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentFl, new HomeFragment())
+                .replace(R.id.fragmentFl, new UserBrowseFragment())
                 .commit();
     }
 }

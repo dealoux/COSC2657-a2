@@ -19,7 +19,7 @@ import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
 import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.utils.ActivityUtils;
-import ducle.greenapp.activities.volunteer.VolunteerBrowseFragment;
+import ducle.greenapp.activities.user.UserBrowseFragment;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.user.Volunteer;
 
@@ -114,11 +114,11 @@ public class SiteEditFragment extends MyFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("siteId", site.getId());
 
-                VolunteerBrowseFragment volunteerBrowseFragment = new VolunteerBrowseFragment();
-                volunteerBrowseFragment.setArguments(bundle);
+                UserBrowseFragment userBrowseFragment = new UserBrowseFragment();
+                userBrowseFragment.setArguments(bundle);
 
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentFl, volunteerBrowseFragment)
+                        .replace(R.id.fragmentFl, userBrowseFragment)
                         .addToBackStack(null)
                         .commit();
             }

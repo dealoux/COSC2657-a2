@@ -90,12 +90,55 @@ public abstract class AppRepository extends RoomDatabase {
     }
 
     /**
-     * Add a new volunteer object to the database
-     * @param volunteer
+     * Return a new basic admin object with the next available id
      */
-    public String addVolunteer(Volunteer volunteer){
-        getVolunteerDao().insert(volunteer);
-        return "Added " + volunteer.getTitle();
+    public Admin nextAdmin(){
+        return new Admin(String.valueOf(getAdminDao().getCount() + 1));
+    }
+
+    /**
+     * Add a new user object to the database
+     * @param user
+     */
+    public String addUser(User user){
+        if(user instanceof Volunteer){
+            getVolunteerDao().insert((Volunteer) user);
+        }
+        else if(user instanceof Admin){
+            getAdminDao().insert((Admin) user);
+        }
+
+        return "Added " + user.getTitle();
+    }
+
+    /**
+     * Return the user with the given id
+     * @param userId
+     * @return the user with the given id
+     */
+    public User getUser(String userId){
+        User user = getVolunteerDao().get(userId);
+
+        if(user == null) {
+            user = getAdminDao().get(userId);
+        }
+
+        return user;
+    }
+
+    /**
+     * Update the user in the database
+     * @param user
+     */
+    public String updateUser(User user){
+        if(user instanceof Volunteer){
+            getVolunteerDao().update((Volunteer) user);
+        }
+        else if(user instanceof Admin){
+            getAdminDao().update((Admin) user);
+        }
+
+        return "Updated " + user.getTitle();
     }
 
     /**
