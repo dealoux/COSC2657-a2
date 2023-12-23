@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Update;
 
 @Dao
-public interface MyEntityDao<T extends MyEntity> {
+public interface MyEntityDao<T> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(T ... entities);
 

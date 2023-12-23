@@ -5,12 +5,11 @@ import ducle.greenapp.database.models.MyEntity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
 @Entity(tableName = "User")
-public class User extends MyEntity implements Comparable<User> {
+public class User extends MyEntity {
     @ColumnInfo(name = "first_name")
     protected String fName;
     @ColumnInfo(name = "last_name")
@@ -87,12 +86,6 @@ public class User extends MyEntity implements Comparable<User> {
     @NonNull
     @Override
     public String toString() {
-        return id + " " + fName + " " + lName + "\n"
-                + getLatLng().toString() + "\n";
-    }
-
-    @Override
-    public int compareTo(User user) {
-        return getId().compareTo(user.getId());
+        return super.toString() + "\n" + fName + " " + lName;
     }
 }

@@ -44,7 +44,7 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
 
         getActivity().setTitle("Choose or create a site");
 
-         launcher = registerForActivityResult(
+        launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if(result.getResultCode() == RESULT_OK){
@@ -52,21 +52,18 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
                         Toast.makeText(getActivity(), (String) data.getExtras().get("response"), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshSites();
     }
 
     @Override
     protected void handleMapsCallback() {
         super.handleMapsCallback();
-
-        List<CleanUpSite> sites = AppRepository.Instance(getContext()).getCleanUpSiteDao().getList();
-
-        for(CleanUpSite site : sites) {
-            myMap.addMarker(new MarkerOptions()
-                    .position(site.getLatLng())
-                    .title(site.getId())
-                    .snippet(site.getSnippet()));
-        }
+        refreshSites();
     }
 
     @Override
@@ -98,11 +95,11 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
         Intent intent1 = new Intent(getActivity(), CreateSiteActivity.class);
         intent1.putExtras(intent);
 
-        if(!marker.getSnippet().contains(intent.getStringExtra("userId"))){
-            intent1.putExtra("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+        if(marker.getTitle().startsWith("SITE")){
+            intent1.putExtra("siteId", marker.getTitle());
         }
         else{
-            intent1.putExtra("siteId", marker.getTitle());
+            intent1.putExtra("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
         }
 
         launcher.launch(intent1);
@@ -112,5 +109,20 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
     public boolean onMarkerClick(@NonNull Marker marker) {
         Toast.makeText(getActivity(), "Click on the info window to confirm the site", Toast.LENGTH_SHORT).show();
         return super.onMarkerClick(marker);
+    }
+
+    private void refreshSites(){
+        if(myMap == null) return;
+
+        myMap.clear();
+
+        List<CleanUpSite> sites = AppRepository.Instance(getContext()).getCleanUpSiteDao().getList();
+
+        for(CleanUpSite site : sites) {
+            myMap.addMarker(new MarkerOptions()
+                    .position(site.getLatLng())
+                    .title(site.getId())
+                    .snippet(site.getSnippet()));
+        }
     }
 }

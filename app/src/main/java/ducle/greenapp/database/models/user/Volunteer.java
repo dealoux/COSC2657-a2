@@ -2,7 +2,6 @@ package ducle.greenapp.database.models.user;
 
 import static ducle.greenapp.database.models.utils.ModelUtils.prefixId;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -23,16 +22,5 @@ public class Volunteer extends User {
 
     public Volunteer(String id, String location, String fName, String lName, String username, String password) {
         super(prefixId(id,"VOL"), location, fName, lName, username, password);
-    }
-
-    @Override
-    public String getTitle() {
-        return "Volunteer " + super.getTitle();
-    }
-
-    @NonNull
-    @Override
-    public String toString(){
-        return "Volunteer " + super.toString();
     }
 }

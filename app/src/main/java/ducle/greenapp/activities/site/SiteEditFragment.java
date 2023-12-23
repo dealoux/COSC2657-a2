@@ -19,10 +19,18 @@ import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
 import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.utils.ActivityUtils;
+import ducle.greenapp.activities.volunteer.VolunteerBrowseFragment;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.user.Volunteer;
 
 public class SiteEditFragment extends MyFragment {
+    private static final int CREATE = 0;
+    private static final int EDIT = 1;
+    private static final int JOIN = 2;
+
+    private int state;
+    private String userId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -50,24 +58,32 @@ public class SiteEditFragment extends MyFragment {
 
         CleanUpSite site;
 
+        userId = intent.getStringExtra("userId");
+
         if(bundle != null){
-            getActivity().setTitle("Edit Site");
+            state = EDIT;
+            getActivity().setTitle("Update Site");
             site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(bundle.getString("siteId"));
         }
         else{
-            String userId = intent.getStringExtra("userId");
-
             if(intent.getStringExtra("siteId") != null){
                 site = AppRepository.Instance(getContext()).getCleanUpSiteDao().get(intent.getStringExtra("siteId"));
 
                 if(userId.equals(site.getOwnerId())){
-                    getActivity().setTitle("Edit Site");
+                    state = EDIT;
+                    getActivity().setTitle("Update Site");
                 }
                 else{
-                    getActivity().setTitle("View Site");
+                    state = JOIN;
+                    getActivity().setTitle("Join Site");
+                    siteName.setFocusable(false);
+                    timeslot.setEnabled(false);
+                    dateSite.setEnabled(false);
+                    wasteData.setFocusable(false);
                 }
             }
             else{
+                state = CREATE;
                 getActivity().setTitle("Create Site");
                 buttonViewVolunteers.setVisibility(View.GONE);
                 site = AppRepository.Instance(getContext()).nextSite(intent.getParcelableExtra("latLng"), userId);
@@ -93,6 +109,22 @@ public class SiteEditFragment extends MyFragment {
             }
         });
 
+        buttonViewVolunteers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("siteId", site.getId());
+
+                VolunteerBrowseFragment volunteerBrowseFragment = new VolunteerBrowseFragment();
+                volunteerBrowseFragment.setArguments(bundle);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentFl, volunteerBrowseFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,12 +133,19 @@ public class SiteEditFragment extends MyFragment {
                 site.setTime(timeslot.getText().toString());
                 site.setCollectedAmount(wasteData.getText().toString());
 
-                if(bundle == null){
-                    String result = AppRepository.Instance(getContext()).addSite(site);
-                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getActivity(), "Edited site " + site.getId() , Toast.LENGTH_SHORT).show();
+                switch (state){
+                    case CREATE:
+                        String result = AppRepository.Instance(getContext()).addSite(site);
+                        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                        break;
+                    case EDIT:
+                        AppRepository.Instance(getContext()).getCleanUpSiteDao().update(site);
+                        Toast.makeText(getActivity(), "Updated site " + site.getTitle() , Toast.LENGTH_SHORT).show();
+                        break;
+                    case JOIN:
+                        AppRepository.Instance(getContext()).getVolunteerSiteDao().insert(userId, site.getId());
+                        Toast.makeText(getActivity(), "Joined site " + site.getTitle() , Toast.LENGTH_SHORT).show();
+                        break;
                 }
 
                 popStack();

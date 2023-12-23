@@ -9,6 +9,11 @@ public class VolunteerSiteCrossRef{
     public String user_id;
     @NonNull
     public String site_id;
+
+    public VolunteerSiteCrossRef(@NonNull String user_id, @NonNull String site_id) {
+        this.user_id = user_id;
+        this.site_id = site_id;
+    }
 }
 
 

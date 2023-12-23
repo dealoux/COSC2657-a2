@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 import ducle.greenapp.database.models.utils.ModelUtils;
 
 @Entity
-public abstract class MyEntity {
+public class MyEntity implements Comparable<MyEntity> {
     @PrimaryKey
     @ColumnInfo(name = "id")
     @NonNull
@@ -63,5 +63,16 @@ public abstract class MyEntity {
     public void setLatLng(String locationString) {
         String[] location = ModelUtils.splitTrimLine(locationString, ",");
         setLatLng(location[0], location[1]);
+    }
+
+    @Override
+    public int compareTo(MyEntity entity) {
+        return getId().compareTo(entity.getId());
+    }
+
+    @NonNull
+    @Override
+    public String toString(){
+        return getClass().getSimpleName() + " " + getId() + "\n" + getLatLng().toString();
     }
 }

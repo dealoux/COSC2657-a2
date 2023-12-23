@@ -2,14 +2,10 @@ package ducle.greenapp;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -56,28 +52,10 @@ public abstract class AppRepository extends RoomDatabase {
                 .build();
     }
 
-    @Override
-    public void clearAllTables() {
-
-    }
-
-    @NonNull
-    @Override
-    protected InvalidationTracker createInvalidationTracker() {
-        return null;
-    }
-
-    @NonNull
-    @Override
-    protected SupportSQLiteOpenHelper createOpenHelper(@NonNull DatabaseConfiguration databaseConfiguration) {
-        return null;
-    }
-
     /**
      * Close the database and clear any cached data
      */
     public void destroyInstance() {
-
         if (instance.isOpen()) {
             instance.close();
         }
@@ -88,10 +66,10 @@ public abstract class AppRepository extends RoomDatabase {
     /**
      * Return a new basic site object with the next available id
      * @param latLng
-     * @param OwnerId
+     * @param ownerId
      */
-    public CleanUpSite nextSite(LatLng latLng, String OwnerId){
-        return new CleanUpSite(String.valueOf(getCleanUpSiteDao().getCount() + 1), latLng, OwnerId);
+    public CleanUpSite nextSite(LatLng latLng, String ownerId){
+        return new CleanUpSite(String.valueOf(getCleanUpSiteDao().getCount() + 1), latLng, ownerId);
     }
 
 
@@ -101,7 +79,8 @@ public abstract class AppRepository extends RoomDatabase {
      */
     public String addSite(CleanUpSite site){
         getCleanUpSiteDao().insert(site);
-        return site.toString();
+        getVolunteerSiteDao().insert(site.getOwnerId(), site.getId());
+        return "Added " + site.getTitle();
     }
 
     /**

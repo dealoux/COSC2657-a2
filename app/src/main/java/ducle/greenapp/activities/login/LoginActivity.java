@@ -16,7 +16,7 @@ public class LoginActivity extends MyActivity {
         AppRepository.Instance(this);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentFl, new LoginFragment())
+                .replace(R.id.fragmentFl, new LoginFragment())
                 .commit();
     }
 }

@@ -11,10 +11,8 @@ public class MapActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framelayout);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentFl, new MapsSiteViewFragment())
+                .replace(R.id.fragmentFl, new MapsSiteViewFragment())
                 .commit();
     }
 }

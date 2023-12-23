@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity
-public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
+public class CleanUpSite extends MyEntity{
     public final static List<String> TIME_SLOTS = new ArrayList<>(
             Arrays.asList("7:00", "9:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00")
     );
@@ -121,14 +121,9 @@ public class CleanUpSite extends MyEntity implements Comparable<CleanUpSite>{
         return latLng.toString() + "\n" + "Owner: " + ownerId + "\n" + "Date: " + date + " " + time + "\n" + "Waste collected: " + collectedAmount;
     }
 
-    @Override
-    public int compareTo(CleanUpSite site) {
-        return getId().compareTo(site.getId());
-    }
-
     @NonNull
     @Override
     public String toString(){
-        return "CleanUpSite " + super.toString() + ", name: " + name + ", date: " + date + " " + time + ", waste collected: " + collectedAmount;
+        return super.toString() + "\nname: " + name + ", time: " + time + " " + date + ", waste collected: " + collectedAmount;
     }
 }

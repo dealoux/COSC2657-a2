@@ -21,5 +21,5 @@ public class VolunteerWithOwnedSites {
                     parentColumn = "user_id",
                     entityColumn = "site_id")
     )
-    public List<CleanUpSite> ownedSites;
+    public List<CleanUpSite> siteLists;
 }
