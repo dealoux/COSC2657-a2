@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.Task;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.MyFragment;
+import ducle.greenapp.activities.utils.MyFragment;
 
 public class BaseMapsFragment extends MyFragment implements
         OnMapReadyCallback,

@@ -3,7 +3,7 @@ package ducle.greenapp.activities.site;
 import android.os.Bundle;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.MyDatePickerActivity;
+import ducle.greenapp.activities.utils.MyDatePickerActivity;
 
 public class SiteActivity extends MyDatePickerActivity {
     @Override

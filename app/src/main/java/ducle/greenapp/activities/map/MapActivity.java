@@ -3,7 +3,7 @@ package ducle.greenapp.activities.map;
 import android.os.Bundle;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.MyActivity;
+import ducle.greenapp.activities.utils.MyActivity;
 
 public class MapActivity extends MyActivity {
     @Override

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.MyActivity;
+import ducle.greenapp.activities.utils.MyActivity;
 import ducle.greenapp.activities.map.MapActivity;
 import ducle.greenapp.activities.site.SiteActivity;
 

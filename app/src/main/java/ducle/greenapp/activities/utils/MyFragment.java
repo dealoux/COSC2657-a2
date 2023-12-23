@@ -1,4 +1,4 @@
-package ducle.greenapp.activities;
+package ducle.greenapp.activities.utils;
 
 import androidx.fragment.app.Fragment;
 

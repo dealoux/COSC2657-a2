@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import ducle.greenapp.AppRepository;
 import ducle.greenapp.R;
-import ducle.greenapp.activities.MyActivity;
+import ducle.greenapp.activities.utils.MyActivity;
 
 public class LoginActivity extends MyActivity {
 

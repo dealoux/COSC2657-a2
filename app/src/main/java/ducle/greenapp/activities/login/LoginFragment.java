@@ -24,7 +24,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ducle.greenapp.AppRepository;
-import ducle.greenapp.activities.MyFragment;
+import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.activities.home.HomeActivity;
 import ducle.greenapp.R;
 import ducle.greenapp.database.models.user.User;

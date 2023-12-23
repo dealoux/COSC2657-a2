@@ -1,4 +1,4 @@
-package ducle.greenapp.activities;
+package ducle.greenapp.activities.utils;
 
 import static ducle.greenapp.activities.utils.ActivityUtils.setDate;
 
@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import ducle.greenapp.R;
-import ducle.greenapp.activities.MyActivity;
 
 public abstract class MyDatePickerActivity extends MyActivity implements DatePickerDialog.OnDateSetListener {
 
