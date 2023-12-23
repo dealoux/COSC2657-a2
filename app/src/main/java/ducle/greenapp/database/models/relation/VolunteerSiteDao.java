@@ -1,6 +1,7 @@
 package ducle.greenapp.database.models.relation;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
@@ -15,6 +16,13 @@ public abstract class VolunteerSiteDao implements MyEntityDao<VolunteerSiteCross
     public void insert(String userId, String siteId) {
         insert(new VolunteerSiteCrossRef(userId, siteId));
     }
+
+    @Query("DELETE FROM VolunteerSiteCrossRef WHERE user_id = :userId")
+    public abstract void  deleteByUserId(String userId);
+    @Query("DELETE FROM VolunteerSiteCrossRef WHERE site_id = :siteId")
+    public abstract void  deleteBySiteId(String siteId);
+    @Query("DELETE FROM VolunteerSiteCrossRef WHERE user_id =:userId AND site_id = :siteId")
+    public abstract void  delete(String userId, String siteId);
 
     @Transaction
     @Query("SELECT * FROM Volunteer")

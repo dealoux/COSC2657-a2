@@ -41,7 +41,7 @@ public class SiteBrowseFragment extends MyFragment {
             siteListView.setAdapter(arrayAdapter);
         }
         else{
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getVolunteerSiteDao().getVolunteerWithSites(intent.getStringExtra("userId")).siteLists);
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getAllSites());
             siteListView.setAdapter(arrayAdapter);
         }
 

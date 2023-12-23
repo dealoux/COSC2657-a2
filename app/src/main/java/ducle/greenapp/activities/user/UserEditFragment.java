@@ -1,5 +1,6 @@
 package ducle.greenapp.activities.user;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,23 +47,24 @@ public class UserEditFragment extends MyFragment {
         EditText username = (EditText) view.findViewById(R.id.username);
         EditText password = (EditText) view.findViewById(R.id.password);
         Button buttonConfirm = (Button) view.findViewById(R.id.buttonConfirm);
+        Button buttonDelete = (Button) view.findViewById(R.id.buttonDelete);
 
         User user;
 
         if(bundle.getString("userId") == null){
             state = CREATE;
             getActivity().setTitle("Register");
-            user = AppRepository.Instance(getContext()).nextVolunteer();
-            username.setText(bundle.getString("username"));
-            password.setText(bundle.getString("password"));
+            user = AppRepository.Instance(getContext()).nextVolunteer(bundle.getString("username"), bundle.getString("password"));
         }
         else{
             state = EDIT;
             getActivity().setTitle("Edit Profile");
             user = AppRepository.Instance(getContext()).getUser(bundle.getString("userId"));
-            username.setText(user.getUsername());
-            password.setText(user.getPassword());
             latLng = user.getLatLng();
+
+            if(bundle.getString("userId").startsWith("ADM")){
+                buttonDelete.setVisibility(View.VISIBLE);
+            }
         }
 
         userId.setText(user.getId());
@@ -70,6 +72,8 @@ public class UserEditFragment extends MyFragment {
         fName.setText(user.getfName());
         lName.setText(user.getlName());
         location.setText(user.getLatLng().toString());
+        username.setText(user.getUsername());
+        password.setText(user.getPassword());
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +126,25 @@ public class UserEditFragment extends MyFragment {
                     Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                     popStack();
                 }
+            }
+        });
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Delete User " + user.getTitle())
+                        .setMessage("Are you sure you want to delete this user?")
+                        .setPositiveButton("Yes", (dialogInterface, i) -> {
+                            String text = AppRepository.Instance(getContext()).deleteUser(user);
+                            Toast.makeText(getActivity(), text , Toast.LENGTH_SHORT).show();
+                            popStack();
+                        })
+                        .setNegativeButton("No", (dialogInterface, i) -> {
+                            dialogInterface.dismiss();
+                        })
+                        .show();
             }
         });
     }

@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import ducle.greenapp.R;
 import ducle.greenapp.activities.map.MapActivity;
 import ducle.greenapp.activities.site.SiteActivity;
+import ducle.greenapp.activities.user.UserActivity;
 import ducle.greenapp.activities.user.UserEditFragment;
 import ducle.greenapp.activities.utils.MyFragment;
 
@@ -85,17 +86,17 @@ public class HomeFragment extends MyFragment implements ActivityCompat.OnRequest
 
         Button buttonHomeManageUser = (Button) getActivity().findViewById(R.id.buttonHomeManageUser);
 
-//        buttonHomeManageUser.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent1 = new Intent(HomeActivity.this, ManageUserActivity.class);
-//                intent1.putExtras(intent);
-//                launcher.launch(intent1);
-//            }
-//        });
+        buttonHomeManageUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getContext(), UserActivity.class);
+                intent1.putExtras(intent);
+                launcher.launch(intent1);
+            }
+        });
 
-        if(!userId.startsWith("ADM")){
-            buttonHomeManageUser.setVisibility(View.GONE);
+        if(userId.startsWith("ADM")){
+            buttonHomeManageUser.setVisibility(View.VISIBLE);
         }
     }
 }

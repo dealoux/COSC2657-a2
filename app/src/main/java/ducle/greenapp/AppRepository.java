@@ -9,6 +9,9 @@ import androidx.room.TypeConverters;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ducle.greenapp.database.converters.Converters;
 import ducle.greenapp.database.models.CleanUpSite;
 import ducle.greenapp.database.models.CleanUpSiteDao;
@@ -82,18 +85,32 @@ public abstract class AppRepository extends RoomDatabase {
         return "Added " + site.getTitle();
     }
 
-    /**
-     * Return a new basic volunteer object with the next available id
-     */
-    public Volunteer nextVolunteer(){
-        return new Volunteer(String.valueOf(getVolunteerDao().getCount() + 1));
+    public String deleteSite(CleanUpSite site){
+        getCleanUpSiteDao().delete(site);
+        getVolunteerSiteDao().deleteBySiteId(site.getId());
+        return "Deleted " + site.getTitle();
+    }
+
+    public List<CleanUpSite> getAllSites(){
+        return getCleanUpSiteDao().getList();
     }
 
     /**
-     * Return a new basic admin object with the next available id
+     * Return a new volunteer object with the next available id
+     * @param username
+     * @param password
      */
-    public Admin nextAdmin(){
-        return new Admin(String.valueOf(getAdminDao().getCount() + 1));
+    public Volunteer nextVolunteer(String username, String password){
+        return new Volunteer(String.valueOf(getVolunteerDao().getCount() + 1), username, password);
+    }
+
+    /**
+     * Return a new admin object with the next available id
+     * @param username
+     * @param password
+     */
+    public Admin nextAdmin(String username, String password){
+        return new Admin(String.valueOf(getAdminDao().getCount() + 1), username, password);
     }
 
     /**
@@ -142,6 +159,22 @@ public abstract class AppRepository extends RoomDatabase {
     }
 
     /**
+     * Delete the user from the database
+     * @param user
+     */
+    public String deleteUser(User user){
+        if(user instanceof Volunteer){
+            getVolunteerDao().delete((Volunteer) user);
+            getVolunteerSiteDao().deleteByUserId(user.getId());
+        }
+        else if(user instanceof Admin){
+            getAdminDao().delete((Admin) user);
+        }
+
+        return "Deleted " + user.getTitle();
+    }
+
+    /**
      * Add a new volunteer object with the next available id to the database
      * @param latLng
      * @param fName
@@ -154,6 +187,15 @@ public abstract class AppRepository extends RoomDatabase {
         getVolunteerDao().insert(volunteer);
 
         return volunteer.toString();
+    }
+
+    public List<User> getAllUsers(){
+        List<User> userList = new ArrayList<>();
+
+        userList.addAll(getVolunteerDao().getList());
+        userList.addAll(getAdminDao().getList());
+
+        return userList;
     }
 
     /**

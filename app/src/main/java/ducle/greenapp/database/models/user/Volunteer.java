@@ -11,8 +11,8 @@ import com.google.android.gms.maps.model.LatLng;
 @Entity(tableName = "Volunteer")
 public class Volunteer extends User {
     @Ignore
-    public Volunteer(String id) {
-        super(id);
+    public Volunteer(String id, String username, String password) {
+        super(id, username, password);
     }
 
     public Volunteer(String id, LatLng latLng, String fName, String lName, String username, String password) {

@@ -1,5 +1,6 @@
 package ducle.greenapp.activities.site;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,11 +54,16 @@ public class SiteEditFragment extends MyFragment {
         TextView wasteData = (TextView) view.findViewById(R.id.wasteAmount);
 
         Button buttonViewVolunteers = (Button) view.findViewById(R.id.buttonViewVolunteers);
-        Button buttonConfirm = (Button) view.findViewById(R.id.buttonSiteConfirm);
+        Button buttonConfirm = (Button) view.findViewById(R.id.buttonConfirm);
+        Button buttonDelete = (Button) view.findViewById(R.id.buttonDelete);
 
         CleanUpSite site;
 
         userId = intent.getStringExtra("userId");
+
+        if(userId.startsWith("ADM")){
+            buttonDelete.setVisibility(View.VISIBLE);
+        }
 
         if(bundle != null){
             state = EDIT;
@@ -148,6 +154,25 @@ public class SiteEditFragment extends MyFragment {
                 }
 
                 popStack();
+            }
+        });
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Delete Site " + site.getTitle())
+                        .setMessage("Are you sure you want to delete this site?")
+                        .setPositiveButton("Yes", (dialogInterface, i) -> {
+                            String text = AppRepository.Instance(getContext()).deleteSite(site);
+                            Toast.makeText(getActivity(), text , Toast.LENGTH_SHORT).show();
+                            popStack();
+                        })
+                        .setNegativeButton("No", (dialogInterface, i) -> {
+                            dialogInterface.dismiss();
+                        })
+                        .show();
             }
         });
     }

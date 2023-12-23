@@ -28,6 +28,7 @@ import ducle.greenapp.activities.site.CreateSiteActivity;
 import ducle.greenapp.database.models.CleanUpSite;
 
 public class MapsSiteViewFragment extends BaseMapsFragment {
+    private boolean isAdmin = false;
     ActivityResultLauncher<Intent> launcher;
 
     @Nullable
@@ -41,8 +42,9 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         getActivity().setTitle("Choose or create a site");
+
+        isAdmin = getActivity().getIntent().getExtras().getString("userId").startsWith("ADM");
 
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -99,6 +101,10 @@ public class MapsSiteViewFragment extends BaseMapsFragment {
             intent1.putExtra("siteId", marker.getTitle());
         }
         else{
+            if(isAdmin){
+                return;
+            }
+
             intent1.putExtra("latLng", new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
         }
 

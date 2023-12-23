@@ -19,9 +19,9 @@ public class User extends MyEntity {
     @ColumnInfo(name = "password")
     protected String password;
 
-    public User(String id){
+    public User(String id, String username, String password){
         super(id);
-        initData("", "", "", "");
+        initData("", "", username, password);
     }
 
     public User(String id, LatLng latLng, String fName, String lName, String username, String password) {
