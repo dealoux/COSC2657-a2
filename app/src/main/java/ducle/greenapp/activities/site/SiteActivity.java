@@ -12,8 +12,7 @@ public class SiteActivity extends MyDatePickerActivity {
         setContentView(R.layout.activity_framelayout);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentFl, new SiteBrowseFragment())
-                .addToBackStack(null)
+                .add(R.id.fragmentFl, new SiteBrowseFragment())
                 .commit();
     }
 }
