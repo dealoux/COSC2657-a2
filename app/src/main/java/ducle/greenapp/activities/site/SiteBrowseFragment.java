@@ -18,6 +18,7 @@ import ducle.greenapp.activities.utils.MyFragment;
 import ducle.greenapp.database.models.CleanUpSite;
 
 public class SiteBrowseFragment extends MyFragment {
+    private String userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,11 +38,18 @@ public class SiteBrowseFragment extends MyFragment {
         ListView siteListView = (ListView) view.findViewById(R.id.browseListView);
 
         if(bundle != null){
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getCleanUpSiteDao().getByOwnerList(bundle.getString("userId")));
+            userId = bundle.getString("userId");
+        }
+        else{
+            userId = intent.getStringExtra("userId");
+        }
+
+        if(userId.startsWith("ADM")){
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getAllSites());
             siteListView.setAdapter(arrayAdapter);
         }
         else{
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getAllSites());
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, AppRepository.Instance(getContext()).getCleanUpSiteDao().getByOwnerList(userId));
             siteListView.setAdapter(arrayAdapter);
         }
 
