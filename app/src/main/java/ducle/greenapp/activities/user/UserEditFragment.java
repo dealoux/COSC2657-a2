@@ -1,6 +1,7 @@
 package ducle.greenapp.activities.user;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class UserEditFragment extends MyFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Intent intent = getActivity().getIntent();
         Bundle bundle = getArguments();
 
         EditText userId = (EditText) view.findViewById(R.id.userId);
@@ -62,7 +64,7 @@ public class UserEditFragment extends MyFragment {
             user = AppRepository.Instance(getContext()).getUser(bundle.getString("userId"));
             latLng = user.getLatLng();
 
-            if(bundle.getString("userId").startsWith("ADM")){
+            if(intent.getStringExtra("userId").startsWith("ADM")){
                 buttonDelete.setVisibility(View.VISIBLE);
             }
         }
